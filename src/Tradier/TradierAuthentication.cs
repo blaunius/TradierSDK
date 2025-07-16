@@ -1,9 +1,14 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
-namespace Tradier.Core
+namespace Tradier
 {
     public class TradierAuthentication
     {
+        public TradierAuthentication() { }
+        public TradierAuthentication(string accessToken)
+        {
+            AccessToken = accessToken;
+        }
         public string? ClientId { get; set; }
         public string? ClientSecret { get; set; }
         public string? RedirectUri { get; set; }

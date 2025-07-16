@@ -15,10 +15,8 @@ namespace Tradier.Tests
         public void TradierClientTest()
         {
             TradierClient client = new TradierClient(
-                new Core.TradierAuthentication()
-                {
-                     
-                });
+                new HttpClient() { BaseAddress = new Uri(TradierClient.BASE_URL_V1) }, 
+                new TradierAuthentication("some-token"));
 
             Assert.Fail();
         }
