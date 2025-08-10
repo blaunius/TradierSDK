@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Tradier.Model;
 using Tradier.Request;
-using Tradier.Models;
 
 namespace Tradier.Services
 {
@@ -10,6 +10,7 @@ namespace Tradier.Services
 
         public Profile GetUserProfile()
         {
+            var rq = client.BuildRequest(HttpMethod.Get, "user/profile");
             throw new NotImplementedException(nameof(GetUserProfile));
         }
          

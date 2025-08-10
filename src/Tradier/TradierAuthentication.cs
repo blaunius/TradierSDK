@@ -4,14 +4,13 @@ namespace Tradier
 {
     public class TradierAuthentication
     {
-        public TradierAuthentication() { }
-        public TradierAuthentication(string accessToken)
+        public TradierAuthentication(Uri redirectUri)
         {
-            AccessToken = accessToken;
+            RedirectUri = redirectUri;
         }
         public string? ClientId { get; set; }
         public string? ClientSecret { get; set; }
-        public string? RedirectUri { get; set; }
+        public Uri RedirectUri { get; set; }
         public string? AuthorizationCode { get; set; }
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
@@ -19,11 +18,6 @@ namespace Tradier
 
         private const string AUTH_ENDPOINT = "https://api.tradier.com/v1/oauth/authorize";
         private const string TOKEN_ENDPOINT = "https://api.tradier.com/v1/oauth/token";
-        public string GetAuthorizationUrl(string state)
-        {
-            return $"{AUTH_ENDPOINT}?client_id={ClientId}&redirect_uri={RedirectUri}&response_type=code&state={state}";
-        }
-
         public async Task ExchangeCodeForTokenAsync()
         {
             using var client = new HttpClient();
@@ -33,7 +27,7 @@ namespace Tradier
                 new KeyValuePair<string, string>("code", AuthorizationCode ?? string.Empty),
                 new KeyValuePair<string, string>("client_id", ClientId ?? string.Empty),
                 new KeyValuePair<string, string>("client_secret", ClientSecret ?? string.Empty),
-                new KeyValuePair<string, string>("redirect_uri", RedirectUri ?? string.Empty)
+                new KeyValuePair<string, string>("redirect_uri", RedirectUri?.ToString() ?? string.Empty)
             });
             var response = await client.PostAsync(TOKEN_ENDPOINT, content);
             response.EnsureSuccessStatusCode();

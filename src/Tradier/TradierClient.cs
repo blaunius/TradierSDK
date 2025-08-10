@@ -1,4 +1,5 @@
 ﻿using Tradier.Services;
+#nullable disable
 
 namespace Tradier
 {
@@ -10,9 +11,28 @@ namespace Tradier
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
             if (this.client.BaseAddress is null)
-                this.client.BaseAddress = new Uri("https://api.tradier.com/v1/");
+                this.client.BaseAddress = new Uri(BASE_URL_V1);
             authentication = auth ?? throw new ArgumentNullException(nameof(auth));
             authentication.ApplyAuthentication(client);
+        }
+
+        public HttpRequestMessage BuildRequest(HttpMethod method, string endpoint)
+        {
+            var rq = new HttpRequestMessage(method, new Uri(client.BaseAddress, endpoint));
+
+            return rq;
+        }
+        public HttpResponseMessage GetAuthorizationCode()
+        {
+            throw new NotImplementedException("GetAuthorizationCode is not implemented. Use GetAuthorizationUrl instead.");
+        }
+        public HttpResponseMessage CreateAccessToken()
+        {
+            throw new NotImplementedException("CreateAccessToken is not implemented. Use GetAuthorizationUrl instead.");
+        }
+        public HttpResponseMessage RefreshAccessToken()
+        {
+            throw new NotImplementedException("RefreshAccessToken is not implemented. Use GetAuthorizationUrl instead.");
         }
     }
     public partial class TradierClient
@@ -25,3 +45,4 @@ namespace Tradier
         public WatchlistService Watchlist => new(this);
     }
 }
+#nullable restore

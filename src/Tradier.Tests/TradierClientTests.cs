@@ -9,16 +9,31 @@ using System.Threading.Tasks;
 namespace Tradier.Tests
 {
     [TestClass()]
-    public class TradierClientTests
+    public class TradierClientTests : IDisposable
     {
+        public required TradierClient client { get; set; }
+        HttpClient? httpClient;
+        TradierAuthentication? auth;
+
+        [TestInitialize()]
+        public void Init()
+        {
+            httpClient = new HttpClient() { BaseAddress = new Uri(TradierClient.BASE_URL_V1) };
+            auth = new TradierAuthentication(new Uri("https://example.com/redirect"));
+            client = new TradierClient(httpClient, auth);
+        }
+
         [TestMethod()]
         public void TradierClientTest()
         {
-            TradierClient client = new TradierClient(
-                new HttpClient() { BaseAddress = new Uri(TradierClient.BASE_URL_V1) }, 
-                new TradierAuthentication("some-token"));
-
+            new Services.AccountService(client).GetUserProfile();
             Assert.Fail();
+        }
+
+
+        public void Dispose()
+        {
+            httpClient?.Dispose();
         }
     }
 }

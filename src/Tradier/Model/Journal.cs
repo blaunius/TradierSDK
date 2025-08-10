@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Tradier.Models
+namespace Tradier.Model
 {
-    public class Adjustment
+    public class Journal
     {
         [JsonProperty("description")]
         public string? Description { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Tradier.Models
+namespace Tradier.Model
 {
     public class Event
     {
