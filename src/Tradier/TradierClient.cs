@@ -3,46 +3,41 @@
 
 namespace Tradier
 {
-    public partial class TradierClient : ITradierClient
+    public class TradierClient : ITradierClient
     {
         private readonly HttpClient client;
         private readonly TradierAuthentication authentication;
+        public const string BASE_URL_V1 = "https://api.tradier.com/v1/";
+
         public TradierClient(HttpClient client, TradierAuthentication auth)
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
-            if (this.client.BaseAddress is null)
-                this.client.BaseAddress = new Uri(BASE_URL_V1);
+            this.client.BaseAddress ??= new Uri(BASE_URL_V1);
             authentication = auth ?? throw new ArgumentNullException(nameof(auth));
             authentication.ApplyAuthentication(client);
         }
 
-        public HttpRequestMessage BuildRequest(HttpMethod method, string endpoint)
+        public async Task<TData> GetResponseAsync<TData>(string endpoint)
         {
-            var rq = new HttpRequestMessage(method, new Uri(client.BaseAddress, endpoint));
-
-            return rq;
+            var rq = new HttpRequestMessage(HttpMethod.Get, new Uri(client.BaseAddress, endpoint));
+            var rs = await this.client.SendAsync(rq);
+            string content = await rs.Content.ReadAsStringAsync();
+            if (!rs.IsSuccessStatusCode)
+                throw new HttpRequestException($"Error fetching data from {endpoint}: ({rs.ReasonPhrase}) {content}");
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TData>(content);
         }
         public HttpResponseMessage GetAuthorizationCode()
         {
-            throw new NotImplementedException("GetAuthorizationCode is not implemented. Use GetAuthorizationUrl instead.");
+            throw new NotImplementedException("GetAuthorizationCode is not implemented.");
         }
         public HttpResponseMessage CreateAccessToken()
         {
-            throw new NotImplementedException("CreateAccessToken is not implemented. Use GetAuthorizationUrl instead.");
+            throw new NotImplementedException("CreateAccessToken is not implemented.");
         }
         public HttpResponseMessage RefreshAccessToken()
         {
-            throw new NotImplementedException("RefreshAccessToken is not implemented. Use GetAuthorizationUrl instead.");
+            throw new NotImplementedException("RefreshAccessToken is not implemented.");
         }
-    }
-    public partial class TradierClient
-    {
-        public const string BASE_URL_V1 = "https://api.tradier.com/v1/";
-        public AccountService Account => new(this);
-        public MarketDataService MarketData => new(this);
-        public StreamingService Streaming => new(this);
-        public TradingService Trading => new(this);
-        public WatchlistService Watchlist => new(this);
     }
 }
 #nullable restore

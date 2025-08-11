@@ -10,8 +10,7 @@ namespace Tradier.Services
 
         public Task<Profile> GetUserProfile()
         {
-            var rq = client.BuildRequest(HttpMethod.Get, "user/profile");
-            throw new NotImplementedException(nameof(GetUserProfile));
+            return client.GetResponseAsync<Profile>("user/profile");
         }
          
         public Task<Balance> GetBalances([Required] string accountId)

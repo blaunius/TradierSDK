@@ -24,9 +24,9 @@ namespace Tradier.Tests
         }
 
         [TestMethod()]
-        public void TradierClientTest()
+        public async Task TradierClientTest()
         {
-            new Services.AccountService(client).GetUserProfile();
+            var myProfile = await new Services.AccountService(client).GetUserProfile();
             Assert.Fail();
         }
 
