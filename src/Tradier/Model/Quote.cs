@@ -7,19 +7,10 @@ using System.Threading.Tasks;
 
 namespace Tradier.Model
 {
-    public class Quote
+    public class Quote : Security
     {
-        [JsonProperty("symbol")]
-        public string? Symbol { get; set; }
-
-        [JsonProperty("description")]
-        public string? Description { get; set; }
-
         [JsonProperty("exch")]
-        public string? Exch { get; set; }
-
-        [JsonProperty("type")]
-        public string? Type { get; set; }
+        public override string? Exchange { get; set; }
 
         [JsonProperty("last")]
         public double? Last { get; set; }
