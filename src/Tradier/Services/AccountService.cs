@@ -8,38 +8,38 @@ namespace Tradier.Services
     {
         public AccountService(ITradierClient client) : base(client) { }
 
-        public Profile GetUserProfile()
+        public Task<Profile> GetUserProfile()
         {
             var rq = client.BuildRequest(HttpMethod.Get, "user/profile");
             throw new NotImplementedException(nameof(GetUserProfile));
         }
          
-        public Balance GetBalances([Required] string accountId)
+        public Task<Balance> GetBalances([Required] string accountId)
         {
             throw new NotImplementedException(nameof(GetBalances));
         }
 
-        public List<Position> GetPositions([Required] string accountId)
+        public Task<List<Position>> GetPositions([Required] string accountId)
         {
             throw new NotImplementedException(nameof(GetPositions));
         }
 
-        public List<Event> GetHistory([Required] string accountId, QueryHistoryRequestParameters? query = null)
+        public Task<List<Event>> GetHistory([Required] string accountId, GetHistoryRequestOptions? query = null)
         {
             throw new NotImplementedException(nameof(GetHistory));
         }
 
-        public List<ClosedPosition> GetGainLoss([Required] string accountId, QueryGainLossParameters? query = null)
+        public Task<List<ClosedPosition>> GetGainLoss([Required] string accountId, GainLossOptions? query = null)
         {
             throw new NotImplementedException(nameof(GetGainLoss));
         }
 
-        public List<Order> GetOrders([Required] string accountId, bool includeTags = false, int? page = null)
+        public Task<List<Order>> GetOrders([Required] string accountId, bool includeTags = false, int? page = null)
         {
             throw new NotImplementedException(nameof(GetOrders));
         }
 
-        public Order GetOrder([Required] string accountId, [Required] string id, bool includeTags = false)
+        public Task<Order> GetOrder([Required] string accountId, [Required] string id, bool includeTags = false)
         {
             throw new NotImplementedException(nameof(GetOrder));
         }
