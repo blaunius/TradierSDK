@@ -4,15 +4,25 @@ namespace Tradier
 {
     public class TradierAuthentication
     {
-        public TradierAuthentication(Uri redirectUri)
+        public TradierAuthentication(bool isSandbox = false)
         {
-            RedirectUri = redirectUri;
+            if (isSandbox && string.IsNullOrEmpty(TradierConfig.AccessTokenSandbox))
+                throw new ArgumentNullException(nameof(TradierConfig.AccessTokenSandbox), "Access token for sandbox must be set before using TradierClient.");
+            if (!isSandbox && string.IsNullOrEmpty(TradierConfig.AccessToken))
+                throw new ArgumentNullException(nameof(TradierConfig.AccessToken), "Access token must be set before using TradierClient.");
+            AccessToken = isSandbox ? TradierConfig.AccessTokenSandbox : TradierConfig.AccessToken;
+            RedirectUri = new Uri(TradierConfig.RedirectUri ?? throw new ArgumentNullException(nameof(TradierConfig.RedirectUri), "Redirect URI must be set before using TradierClient."));
         }
+        public TradierAuthentication(string accessToken)
+        {
+            AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
+            RedirectUri = new Uri(TradierConfig.RedirectUri ?? throw new ArgumentNullException(nameof(TradierConfig.RedirectUri), "Redirect URI must be set before using TradierClient."));
+        }
+        public string AccessToken { get; set; }
+        public Uri RedirectUri { get; }
         public string? ClientId { get; set; }
         public string? ClientSecret { get; set; }
-        public Uri RedirectUri { get; set; }
         public string? AuthorizationCode { get; set; }
-        public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? AccessTokenExpiry { get; set; }
 
@@ -33,7 +43,7 @@ namespace Tradier
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(json);
-            AccessToken = tokenResponse?.access_token;
+            AccessToken = tokenResponse?.access_token ?? throw new ArgumentNullException(nameof(TokenResponse.access_token));
             RefreshToken = tokenResponse?.refresh_token;
             AccessTokenExpiry = DateTime.UtcNow.AddSeconds(tokenResponse?.expires_in ?? 0);
         }
@@ -52,7 +62,7 @@ namespace Tradier
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(json);
-            AccessToken = tokenResponse?.access_token;
+            AccessToken = tokenResponse?.access_token ?? throw new ArgumentNullException(nameof(TokenResponse.access_token));
             AccessTokenExpiry = DateTime.UtcNow.AddSeconds(tokenResponse?.expires_in ?? 0);
         }
 

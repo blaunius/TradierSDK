@@ -3,21 +3,36 @@
 
 namespace Tradier
 {
-    public class TradierClient : ITradierClient
+    /// <summary>
+    /// This client is used for production access only. 
+    /// To use the sandbox environment, use the <see cref="TradierSandboxClient"/> instead.
+    /// </summary>
+    public class TradierClient : ITradierClient, IDisposable
     {
         private readonly HttpClient client;
-        private readonly TradierAuthentication authentication;
-        public const string BASE_URL_V1 = "https://api.tradier.com/v1/";
-
-        public TradierClient(HttpClient client, TradierAuthentication auth)
+        private TradierAuthentication auth;
+        public virtual string AccessToken => TradierConfig.AccessToken;
+        public virtual string BaseAddress => "https://api.tradier.com/v1/";
+        public virtual string StreamAddress => "https://stream.tradier.com/v1/";
+        public TradierClient()
+        {
+            this.client = new HttpClient();
+            disposeClient = true;
+            InitializeClient();
+        }
+        public TradierClient(HttpClient client)
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
-            this.client.BaseAddress ??= new Uri(BASE_URL_V1);
-            authentication = auth ?? throw new ArgumentNullException(nameof(auth));
-            authentication.ApplyAuthentication(client);
+            InitializeClient();
         }
-
-        public async Task<TData> GetResponseAsync<TData>(string endpoint)
+        internal void InitializeClient()
+        {
+            ArgumentNullException.ThrowIfNull(AccessToken, "The access token should be set in the 'TradierConfig' class");
+            this.client.BaseAddress ??= new Uri(BaseAddress);
+            this.auth = new TradierAuthentication(this.AccessToken);
+            this.auth.ApplyAuthentication(this.client);
+        }
+        public async Task<TData> GetDataAsync<TData>(string endpoint)
         {
             var rq = new HttpRequestMessage(HttpMethod.Get, new Uri(client.BaseAddress, endpoint));
             var rs = await this.client.SendAsync(rq);
@@ -26,17 +41,12 @@ namespace Tradier
                 throw new HttpRequestException($"Error fetching data from {endpoint}: ({rs.ReasonPhrase}) {content}");
             return Newtonsoft.Json.JsonConvert.DeserializeObject<TData>(content);
         }
-        public HttpResponseMessage GetAuthorizationCode()
+
+        private bool disposeClient { get; }
+        public virtual void Dispose()
         {
-            throw new NotImplementedException("GetAuthorizationCode is not implemented.");
-        }
-        public HttpResponseMessage CreateAccessToken()
-        {
-            throw new NotImplementedException("CreateAccessToken is not implemented.");
-        }
-        public HttpResponseMessage RefreshAccessToken()
-        {
-            throw new NotImplementedException("RefreshAccessToken is not implemented.");
+            if (disposeClient)
+                client?.Dispose();
         }
     }
 }

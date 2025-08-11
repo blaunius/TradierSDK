@@ -5,22 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+#nullable disable
 namespace Tradier.Tests
 {
     [TestClass()]
-    public class TradierClientTests : IDisposable
+    public class TradierClientTests
     {
-        public required TradierClient client { get; set; }
-        HttpClient? httpClient;
-        TradierAuthentication? auth;
+        public TradierClient client { get; set; }
 
         [TestInitialize()]
         public void Init()
         {
-            httpClient = new HttpClient() { BaseAddress = new Uri(TradierClient.BASE_URL_V1) };
-            auth = new TradierAuthentication(new Uri("https://example.com/redirect"));
-            client = new TradierClient(httpClient, auth);
+            client = new TradierClient();
         }
 
         [TestMethod()]
@@ -29,11 +25,6 @@ namespace Tradier.Tests
             var myProfile = await new Services.AccountService(client).GetUserProfile();
             Assert.Fail();
         }
-
-
-        public void Dispose()
-        {
-            httpClient?.Dispose();
-        }
     }
 }
+#nullable restore
