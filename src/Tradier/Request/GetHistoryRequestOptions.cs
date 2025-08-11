@@ -1,6 +1,6 @@
 ﻿namespace Tradier.Request
 {
-    public class  QueryHistoryRequestParameters : QueryRequestParameters
+    public class  GetHistoryRequestOptions : PaginationRequest
     {
         /// <summary>
         /// Activity type

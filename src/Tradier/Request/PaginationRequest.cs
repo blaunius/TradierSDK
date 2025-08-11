@@ -1,6 +1,6 @@
 ﻿namespace Tradier.Request
 {
-    public class QueryRequestParameters
+    public class PaginationRequest
     {
         /// <summary>
         /// Used for paginated results. Page to start results.

@@ -1,6 +1,6 @@
 ﻿namespace Tradier.Request
 {
-    public class QueryGainLossParameters : QueryRequestParameters
+    public class GainLossOptions : PaginationRequest
     {
         public Enumerations.SortResult? SortBy { get; set; }
         public Enumerations.SortDirection? Sort { get; set; }
