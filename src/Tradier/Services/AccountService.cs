@@ -6,8 +6,16 @@ namespace Tradier.Services
 {
     public class AccountService : TradierService
     {
-        public AccountService() : base() { }
-        public AccountService(ITradierClient client) : base(client) { }
+        public AccountService() : base() 
+        {
+            if (this.client is TradierSandboxClient)
+                throw new NotSupportedException("Account information can only be used in the production client.");
+        }
+        public AccountService(ITradierClient tradierClient) : base(tradierClient) 
+        {
+            if (tradierClient is TradierSandboxClient)
+                throw new NotSupportedException("Account information can only be used in the production client.");
+        }
 
         public Task<Profile> GetUserProfile()
         {

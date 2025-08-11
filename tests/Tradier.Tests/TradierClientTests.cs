@@ -9,24 +9,12 @@ using System.Threading.Tasks;
 namespace Tradier.Tests
 {
     [TestClass()]
-    public class TradierClientTests
+    public class TradierClientTests : Initializer
     {
-        public TradierClient client { get; set; }
-        public TradierSandboxClient sandboxClient { get; set; }
-
-        [TestInitialize()]
-        public void Init()
-        {
-            TradierConfig.RedirectUri = "https://localhost:5001/tradier-client/callback";
-            TradierConfig.AccessToken = "AccessToken";
-            client = new TradierClient();
-            sandboxClient = new TradierSandboxClient();
-        }
-
         [TestMethod()]
         public async Task TradierClientTest()
         {
-            var myProfile = await new Services.AccountService(sandboxClient).GetUserProfile();
+            var myProfile = await new Services.AccountService(Client).GetUserProfile();
             Assert.Fail();
         }
     }

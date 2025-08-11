@@ -11,7 +11,7 @@ namespace Tradier
         }
         public TradierAuthentication(string accessToken, string redirectUri)
         {
-            this.AccessToken = AccessToken ?? throw new ArgumentNullException(nameof(accessToken));
+            this.AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
             this.RedirectUri = new Uri(redirectUri ?? throw new ArgumentNullException(nameof(redirectUri)));
         }
 
