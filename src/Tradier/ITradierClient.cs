@@ -3,7 +3,7 @@ namespace Tradier
 {
     public interface ITradierClient
     {
-        public Task<TData> GetResponseAsync<TData>(
+        public Task<TData> GetDataAsync<TData>(
               string endpoint);
 
     }

@@ -10,7 +10,7 @@ namespace Tradier.Services
 
         public Task<Profile> GetUserProfile()
         {
-            return client.GetResponseAsync<Profile>("user/profile");
+            return client.GetDataAsync<Profile>("user/profile");
         }
          
         public Task<Balance> GetBalances([Required] string accountId)
