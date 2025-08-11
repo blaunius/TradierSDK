@@ -60,6 +60,7 @@ namespace Tradier
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
         private class TokenResponse
