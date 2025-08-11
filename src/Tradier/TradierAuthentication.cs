@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
-using Tradier.Exceptions;
 namespace Tradier
 {
     public class TradierAuthentication
