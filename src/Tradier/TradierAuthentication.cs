@@ -4,20 +4,12 @@ namespace Tradier
 {
     public class TradierAuthentication
     {
-        public TradierAuthentication(bool isSandbox = false)
-        {
-            if (isSandbox && string.IsNullOrEmpty(TradierConfig.AccessTokenSandbox))
-                throw new ArgumentNullException(nameof(TradierConfig.AccessTokenSandbox), "Access token for sandbox must be set before using TradierClient.");
-            if (!isSandbox && string.IsNullOrEmpty(TradierConfig.AccessToken))
-                throw new ArgumentNullException(nameof(TradierConfig.AccessToken), "Access token must be set before using TradierClient.");
-            AccessToken = isSandbox ? TradierConfig.AccessTokenSandbox : TradierConfig.AccessToken;
-            RedirectUri = new Uri(TradierConfig.RedirectUri ?? throw new ArgumentNullException(nameof(TradierConfig.RedirectUri), "Redirect URI must be set before using TradierClient."));
-        }
         public TradierAuthentication(string accessToken)
         {
             AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
             RedirectUri = new Uri(TradierConfig.RedirectUri ?? throw new ArgumentNullException(nameof(TradierConfig.RedirectUri), "Redirect URI must be set before using TradierClient."));
         }
+
         public string AccessToken { get; set; }
         public Uri RedirectUri { get; }
         public string? ClientId { get; set; }
