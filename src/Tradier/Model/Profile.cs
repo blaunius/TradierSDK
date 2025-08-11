@@ -2,10 +2,11 @@
 
 namespace Tradier.Model
 {
+    [JsonObject("profile")]
     public class Profile
     {
         [JsonProperty("account")]
-        public List<Account>? Account { get; set; }
+        public Account? Account { get; set; }
 
         [JsonProperty("id")]
         public string? Id { get; set; }

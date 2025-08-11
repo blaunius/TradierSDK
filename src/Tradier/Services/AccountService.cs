@@ -23,7 +23,7 @@ namespace Tradier.Services
             return client.GetDataAsync<UserProfileResponse>("user/profile");
         }
          
-        public Task<Balance> GetBalances([Required] string accountId)
+        public Task<Balance> GetBalances(string accountId)
         {
             throw new NotImplementedException(nameof(GetBalances));
         }
