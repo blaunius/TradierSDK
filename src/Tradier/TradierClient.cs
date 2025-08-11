@@ -10,7 +10,7 @@ namespace Tradier
             TResponse response = new();
             var rq = new HttpRequestMessage(HttpMethod.Get, new Uri(client.BaseAddress, endpoint));
             var rs = await this.client.SendAsync(rq);
-            response.Parse(rs).GetAwaiter().GetResult();
+            await response.Parse(rs);
             return response;            
         }
     }

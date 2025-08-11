@@ -11,10 +11,7 @@ namespace Tradier.Response
         public Model.Balance? Balance { get; set; }
         internal override void Deserialize()
         {
-            if (this.Successful)
-            {
-                this.Balance = Newtonsoft.Json.JsonConvert.DeserializeObject<BalanceResponse>(this.RawResponse)?.Balance;
-            }
+            this.Balance = Newtonsoft.Json.JsonConvert.DeserializeObject<BalanceResponse>(this.RawResponse)?.Balance;
         }
     }
 }

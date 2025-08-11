@@ -11,10 +11,7 @@ namespace Tradier.Response
         public Model.Profile? Profile { get; set; }
         internal override void Deserialize()
         {
-            if (this.Successful)
-            {
-                this.Profile = Newtonsoft.Json.JsonConvert.DeserializeObject<UserProfileResponse>(this.RawResponse)?.Profile;
-            }
+            this.Profile = Newtonsoft.Json.JsonConvert.DeserializeObject<UserProfileResponse>(this.RawResponse)?.Profile;
         }
     }
 }

@@ -14,15 +14,12 @@ namespace Tradier.Response
         public List<Model.Position> Positions { get; set; } = new();
         internal override void Deserialize()
         {
-            if (this.Successful)
+            this.positionsRaw = Newtonsoft.Json.JsonConvert.DeserializeObject<PositionsResponse>(this.RawResponse)?.positionsRaw;
+            if (positionsRaw == "null")
+                Positions = new();
+            else
             {
-                this.positionsRaw = Newtonsoft.Json.JsonConvert.DeserializeObject<PositionsResponse>(this.RawResponse)?.positionsRaw;
-                if (positionsRaw == "null") 
-                    Positions = new();
-                else
-                {
-                    Positions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Model.Position>>(positionsRaw!) ?? new();
-                }
+                Positions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Model.Position>>(positionsRaw!) ?? new();
             }
         }
     }
