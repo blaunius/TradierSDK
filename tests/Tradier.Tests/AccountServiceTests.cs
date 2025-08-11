@@ -23,11 +23,25 @@ namespace Tradier.Tests
         public async Task TradierClientTest()
         {
             var myProfile = await service.GetUserProfile();
+            AssertResponse(myProfile);
             var id = myProfile.Profile.Id;
-            var myBalance = await service.GetBalances(id);
-            var myPositions = await service.GetPositions(id);
 
-            Assert.Fail();
+            //var myBalance = await service.GetBalances(id);
+            //AssertResponse(myBalance);
+
+            var myPositions = await service.GetPositions(id);
+            AssertResponse(myPositions);
+
+
+        }
+
+        void AssertResponse(Response.TradierResponse rs)
+        {
+            Assert.IsNotNull(rs);
+            Assert.IsTrue(rs.Successful, $"Response was not successful for {rs.GetType().Name}");
+            Assert.IsNotNull(rs.Response, $"Response object was null for {rs.GetType().Name}");
+            Assert.IsNotNull(rs.RawResponse, $"Raw response was null for {rs.GetType().Name}");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(rs.RawResponse), $"Raw response was empty for {rs.GetType().Name}");
         }
     }
 }
