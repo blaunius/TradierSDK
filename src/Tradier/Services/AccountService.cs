@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Tradier.Model;
 using Tradier.Request;
+using Tradier.Response;
 
 namespace Tradier.Services
 {
@@ -17,9 +18,9 @@ namespace Tradier.Services
                 throw new NotSupportedException("Account information can only be used in the production client.");
         }
 
-        public Task<Profile> GetUserProfile()
+        public Task<UserProfileResponse> GetUserProfile()
         {
-            return client.GetDataAsync<Profile>("user/profile");
+            return client.GetDataAsync<UserProfileResponse>("user/profile");
         }
          
         public Task<Balance> GetBalances([Required] string accountId)
