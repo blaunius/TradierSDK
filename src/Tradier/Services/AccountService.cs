@@ -6,6 +6,7 @@ namespace Tradier.Services
 {
     public class AccountService : TradierService
     {
+        public AccountService() : base() { }
         public AccountService(ITradierClient client) : base(client) { }
 
         public Task<Profile> GetUserProfile()

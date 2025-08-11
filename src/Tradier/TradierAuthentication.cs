@@ -1,13 +1,19 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
+using Tradier.Exceptions;
 namespace Tradier
 {
     public class TradierAuthentication
     {
-        public TradierAuthentication(string accessToken)
+        public TradierAuthentication()
         {
-            AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
-            RedirectUri = new Uri(TradierConfig.RedirectUri ?? throw new ArgumentNullException(nameof(TradierConfig.RedirectUri), "Redirect URI must be set before using TradierClient."));
+            AccessToken = TradierConfig.AccessToken ?? throw new TradierAuthenticationException("The access token cannot be null. Please set in TradierConfig");
+            RedirectUri = new Uri(TradierConfig.RedirectUri ?? throw new TradierAuthenticationException("The Redirect URI must be set in TradierConfig."));
+        }
+        public TradierAuthentication(string accessToken, string redirectUri)
+        {
+            this.AccessToken = AccessToken ?? throw new ArgumentNullException(nameof(accessToken));
+            this.RedirectUri = new Uri(redirectUri ?? throw new ArgumentNullException(nameof(redirectUri)));
         }
 
         public string AccessToken { get; set; }

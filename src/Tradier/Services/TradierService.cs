@@ -13,5 +13,10 @@ namespace Tradier.Services
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
         }
+        public TradierService()
+        {
+            this.client = TradierConfig.DefaultClient 
+                ?? throw new InvalidOperationException("Default client is not set. Please initialize a valid ITradierClient instance first.");
+        }
     }
 }

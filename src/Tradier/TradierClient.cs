@@ -1,6 +1,5 @@
 ﻿using Tradier.Services;
 #nullable disable
-
 namespace Tradier
 {
     /// <summary>
@@ -11,13 +10,11 @@ namespace Tradier
     {
         private readonly HttpClient client;
         private TradierAuthentication auth;
-        public virtual string AccessToken => TradierConfig.AccessToken;
-        public virtual string BaseAddress => "https://api.tradier.com/v1/";
-        public virtual string StreamAddress => "https://stream.tradier.com/v1/";
+        internal virtual string BaseAddress => "https://api.tradier.com/v1/";
+        internal virtual string StreamAddress => "https://stream.tradier.com/v1/";
         public TradierClient()
         {
             this.client = new HttpClient();
-            disposeClient = true;
             InitializeClient();
         }
         public TradierClient(HttpClient client)
@@ -25,12 +22,24 @@ namespace Tradier
             this.client = client ?? throw new ArgumentNullException(nameof(client));
             InitializeClient();
         }
+        public TradierClient(TradierAuthentication authentication)
+        {
+            this.client = new HttpClient();
+            this.auth = authentication ?? throw new ArgumentNullException(nameof(authentication));
+            InitializeClient();
+        }
+        public TradierClient(HttpClient client, TradierAuthentication authentication)
+        {
+            this.client = client ?? throw new ArgumentNullException(nameof(client));
+            this.auth = authentication ?? throw new ArgumentNullException(nameof(authentication));
+            InitializeClient();
+        }
         internal void InitializeClient()
         {
-            ArgumentNullException.ThrowIfNull(AccessToken, "The access token should be set in the 'TradierConfig' class");
             this.client.BaseAddress ??= new Uri(BaseAddress);
-            this.auth = new TradierAuthentication(this.AccessToken);
+            this.auth ??= new TradierAuthentication();
             this.auth.ApplyAuthentication(this.client);
+            TradierConfig.DefaultClient = this;
         }
         public async Task<TData> GetDataAsync<TData>(string endpoint)
         {
@@ -41,12 +50,13 @@ namespace Tradier
                 throw new HttpRequestException($"Error fetching data from {endpoint}: ({rs.ReasonPhrase}) {content}");
             return Newtonsoft.Json.JsonConvert.DeserializeObject<TData>(content);
         }
-
-        private bool disposeClient { get; }
         public virtual void Dispose()
         {
-            if (disposeClient)
+            if (TradierConfig.DefaultClient != null)
+            {
                 client?.Dispose();
+            }
+            TradierConfig.DefaultClient = null;
         }
     }
 }
