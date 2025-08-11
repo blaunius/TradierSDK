@@ -7,12 +7,12 @@ namespace Tradier.Services
 {
     public class AccountService : TradierService
     {
-        public AccountService() : base() 
+        public AccountService() : base()
         {
             if (this.client is TradierSandboxClient)
                 throw new NotSupportedException("Account information can only be used in the production client.");
         }
-        public AccountService(ITradierClient tradierClient) : base(tradierClient) 
+        public AccountService(ITradierClient tradierClient) : base(tradierClient)
         {
             if (tradierClient is TradierSandboxClient)
                 throw new NotSupportedException("Account information can only be used in the production client.");
@@ -22,15 +22,15 @@ namespace Tradier.Services
         {
             return client.GetDataAsync<UserProfileResponse>("user/profile");
         }
-         
-        public Task<Balance> GetBalances(string accountId)
+
+        public Task<BalanceResponse> GetBalances(string accountId)
         {
-            throw new NotImplementedException(nameof(GetBalances));
+            return client.GetDataAsync<BalanceResponse>($"accounts/{accountId}/balances");
         }
 
-        public Task<List<Position>> GetPositions([Required] string accountId)
+        public Task<PositionsResponse> GetPositions(string accountId)
         {
-            throw new NotImplementedException(nameof(GetPositions));
+            return client.GetDataAsync<PositionsResponse>($"accounts/{accountId}/positions");
         }
 
         public Task<List<Event>> GetHistory([Required] string accountId, GetHistoryRequestOptions? query = null)

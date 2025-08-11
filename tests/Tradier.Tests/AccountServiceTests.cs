@@ -23,7 +23,10 @@ namespace Tradier.Tests
         public async Task TradierClientTest()
         {
             var myProfile = await service.GetUserProfile();
-            var test2 = await service.GetBalances(myProfile.Profile.Id);
+            var id = myProfile.Profile.Id;
+            var myBalance = await service.GetBalances(id);
+            var myPositions = await service.GetPositions(id);
+
             Assert.Fail();
         }
     }
