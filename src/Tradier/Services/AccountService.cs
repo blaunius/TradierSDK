@@ -33,22 +33,23 @@ namespace Tradier.Services
             return client.GetResponse<PositionsResponse>($"accounts/{accountId}/positions");
         }
 
-        public Task<List<Event>> GetHistory([Required] string accountId, GetHistoryRequestOptions? query = null)
+        public Task<AccountHistoryResponse> GetHistory(string accountId, GetHistoryRequestOptions? query = null)
         {
-            throw new NotImplementedException(nameof(GetHistory));
+            query ??= new GetHistoryRequestOptions();
+            return client.GetResponse<AccountHistoryResponse>($"accounts/{accountId}/history?{query.ParseQueryString()}");
         }
 
-        public Task<List<ClosedPosition>> GetGainLoss([Required] string accountId, GainLossOptions? query = null)
+        public Task<List<ClosedPosition>> GetGainLoss(string accountId, GainLossOptions? query = null)
         {
             throw new NotImplementedException(nameof(GetGainLoss));
         }
 
-        public Task<List<Order>> GetOrders([Required] string accountId, bool includeTags = false, int? page = null)
+        public Task<List<Order>> GetOrders(string accountId, bool includeTags = false, int? page = null)
         {
             throw new NotImplementedException(nameof(GetOrders));
         }
 
-        public Task<Order> GetOrder([Required] string accountId, [Required] string id, bool includeTags = false)
+        public Task<Order> GetOrder(string accountId, string id, bool includeTags = false)
         {
             throw new NotImplementedException(nameof(GetOrder));
         }

@@ -32,7 +32,16 @@ namespace Tradier.Tests
             var myPositions = await service.GetPositions(id);
             AssertResponse(myPositions);
 
-
+            var history = await service.GetHistory(id);
+            var historyWithQuery = await service.GetHistory(id, new Request.GetHistoryRequestOptions()
+            {
+                ActivityType = Enumerations.ActivityType.Trade,
+                End = DateTime.Now,
+                ExactMatch = true,
+                Limit = "10",
+                Start = DateTime.Now.AddDays(-30)
+            });
+            AssertResponse(history);
         }
 
         void AssertResponse(Response.TradierResponse rs)

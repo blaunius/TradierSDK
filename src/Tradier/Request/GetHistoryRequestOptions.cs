@@ -15,5 +15,21 @@
         /// Filter using the exact match
         /// </summary>
         public bool ExactMatch { get; set; }
+
+        public override string ParseQueryString()
+        {
+            string rtn = base.ParseQueryString();
+            if (!string.IsNullOrWhiteSpace(Symbol))
+            {
+                rtn += string.IsNullOrWhiteSpace(rtn) ? "" : "&";
+                rtn += $"symbol={Symbol}";
+            }
+            if (ExactMatch)
+            {
+                rtn += string.IsNullOrWhiteSpace(rtn) ? "" : "&";
+                rtn += "exact=true";
+            }
+            return rtn;
+        }
     }
 }

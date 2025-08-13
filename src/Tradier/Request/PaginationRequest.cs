@@ -12,16 +12,27 @@
         public string? Limit { get; set; }
         public virtual string? Type { get; set; }
         /// <summary>
-        /// Start date, yyyy-mm-dd format
+        /// Start date
         /// </summary>
-        public string? Start { get; set; }
+        public DateTime? Start { get; set; }
         /// <summary>
-        /// End date, yyyy-mm-dd format
+        /// End date
         /// </summary>
-        public string? End { get; set; }
+        public DateTime? End { get; set; }
         public virtual string ParseQueryString()
         {
-            throw new NotImplementedException(nameof(ParseQueryString));
+            var query = new List<string>();
+            if (!string.IsNullOrWhiteSpace(Page))
+                query.Add($"page={Page}");
+            if (!string.IsNullOrWhiteSpace(Limit))
+                query.Add($"limit={Limit}");
+            if (Start.HasValue)
+                query.Add($"start={Start.Value:yyyy-MM-dd}");
+            if (End.HasValue)
+                query.Add($"end={End.Value:yyyy-MM-dd}");
+            if (!string.IsNullOrWhiteSpace(Type))
+                query.Add($"type={Type}");
+            return string.Join("&", query);
         }
     }
 }
