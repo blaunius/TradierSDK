@@ -1,28 +1,28 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Event
     {
-        [JsonProperty("amount")]
+        [JsonPropertyName("amount")]
         public double? Amount { get; set; }
 
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public DateTime? Date { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string? Type { get; set; }
 
-        [JsonProperty("trade")]
+        [JsonPropertyName("trade")]
         public Trade? Trade { get; set; }
 
-        [JsonProperty("adjustment")]
+        [JsonPropertyName("adjustment")]
         public Adjustment? Adjustment { get; set; }
 
-        [JsonProperty("option")]
+        [JsonPropertyName("option")]
         public Option? Option { get; set; }
 
-        [JsonProperty("journal")]
+        [JsonPropertyName("journal")]
         public Journal? Journal { get; set; }
     }
 }

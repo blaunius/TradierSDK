@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +9,31 @@ namespace Tradier.Model
 {
     public class TimeAndSales
     {
-        [JsonProperty("time")]
+        [JsonPropertyName("time")]
         public DateTime? Time { get; set; }
 
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         public int? Timestamp { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public double? Price { get; set; }
 
-        [JsonProperty("open")]
+        [JsonPropertyName("open")]
         public double? Open { get; set; }
 
-        [JsonProperty("high")]
+        [JsonPropertyName("high")]
         public double? High { get; set; }
 
-        [JsonProperty("low")]
+        [JsonPropertyName("low")]
         public double? Low { get; set; }
 
-        [JsonProperty("close")]
+        [JsonPropertyName("close")]
         public double? Close { get; set; }
 
-        [JsonProperty("volume")]
+        [JsonPropertyName("volume")]
         public int? Volume { get; set; }
 
-        [JsonProperty("vwap")]
+        [JsonPropertyName("vwap")]
         public double? VWAP { get; set; }
     }
 }

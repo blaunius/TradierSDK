@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,37 +9,37 @@ namespace Tradier.Model
 {
     public class Greek
     {
-        [JsonProperty("delta")]
+        [JsonPropertyName("delta")]
         public decimal? Delta { get; init; }
 
-        [JsonProperty("gamma")]
+        [JsonPropertyName("gamma")]
         public decimal? Gamma { get; init; }
 
-        [JsonProperty("theta")]
+        [JsonPropertyName("theta")]
         public decimal? Theta { get; init; }
 
-        [JsonProperty("vega")]
+        [JsonPropertyName("vega")]
         public decimal? Vega { get; init; }
 
-        [JsonProperty("rho")]
+        [JsonPropertyName("rho")]
         public decimal? Rho { get; init; }
 
-        [JsonProperty("phi")]
+        [JsonPropertyName("phi")]
         public decimal? Phi { get; init; }
 
-        [JsonProperty("bid_iv")]
+        [JsonPropertyName("bid_iv")]
         public decimal? BidIv { get; init; }
 
-        [JsonProperty("mid_iv")]
+        [JsonPropertyName("mid_iv")]
         public decimal? MidIv { get; init; }
 
-        [JsonProperty("ask_iv")]
+        [JsonPropertyName("ask_iv")]
         public decimal? AskIv { get; init; }
 
-        [JsonProperty("smv_vol")]
+        [JsonPropertyName("smv_vol")]
         public decimal? SmvVol { get; init; }
 
-        [JsonProperty("updated_at")]
+        [JsonPropertyName("updated_at")]
         public string? UpdatedAt { get; init; }
     }
 }

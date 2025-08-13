@@ -1,31 +1,31 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Account
     {
-        [JsonProperty("account_number")]
+        [JsonPropertyName("account_number")]
         public string? AccountNumber { get; set; }
 
-        [JsonProperty("classification")]
+        [JsonPropertyName("classification")]
         public string? Classification { get; set; }
 
-        [JsonProperty("date_created")]
+        [JsonPropertyName("date_created")]
         public DateTime? DateCreated { get; set; }
 
-        [JsonProperty("day_trader")]
+        [JsonPropertyName("day_trader")]
         public bool? DayTrader { get; set; }
 
-        [JsonProperty("option_level")]
+        [JsonPropertyName("option_level")]
         public int? OptionLevel { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string? Status { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string? Type { get; set; }
 
-        [JsonProperty("last_update_date")]
+        [JsonPropertyName("last_update_date")]
         public DateTime? LastUpdateDate { get; set; }
     }
 }

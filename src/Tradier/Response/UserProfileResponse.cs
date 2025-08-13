@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Response
 {
     public class UserProfileResponse : TradierResponse
     {
-        public Model.Profile? Profile { get; set; }
+        [JsonPropertyName("profile")]
+        public Model.Profile? Profile { get; set; } = new();
         internal override void Deserialize()
         {
-            this.Profile = Newtonsoft.Json.JsonConvert.DeserializeObject<UserProfileResponse>(this.RawResponse)?.Profile;
+            if (this.IsSuccessful)
+                this.Profile = System.Text.Json.JsonSerializer.Deserialize<UserProfileResponse>(this.RawResponse)?.Profile;
         }
     }
 }

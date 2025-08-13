@@ -1,34 +1,34 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class ClosedPosition
     {
-        [JsonProperty("close_date")]
+        [JsonPropertyName("close_date")]
         public DateTime? CloseDate { get; set; }
 
-        [JsonProperty("cost")]
+        [JsonPropertyName("cost")]
         public double? Cost { get; set; }
 
-        [JsonProperty("gain_loss")]
+        [JsonPropertyName("gain_loss")]
         public double? GainLoss { get; set; }
 
-        [JsonProperty("gain_loss_percent")]
+        [JsonPropertyName("gain_loss_percent")]
         public double? GainLossPercent { get; set; }
 
-        [JsonProperty("open_date")]
+        [JsonPropertyName("open_date")]
         public DateTime? OpenDate { get; set; }
 
-        [JsonProperty("proceeds")]
+        [JsonPropertyName("proceeds")]
         public double? Proceeds { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public double? Quantity { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string? Symbol { get; set; }
 
-        [JsonProperty("term")]
+        [JsonPropertyName("term")]
         public int? Term { get; set; }
     }
 }

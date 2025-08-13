@@ -1,22 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Pdt
     {
-        [JsonProperty("fed_call")]
+        [JsonPropertyName("fed_call")]
         public int? FedCall { get; set; }
 
-        [JsonProperty("maintenance_call")]
+        [JsonPropertyName("maintenance_call")]
         public int? MaintenanceCall { get; set; }
 
-        [JsonProperty("option_buying_power")]
+        [JsonPropertyName("option_buying_power")]
         public double? OptionBuyingPower { get; set; }
 
-        [JsonProperty("stock_buying_power")]
+        [JsonPropertyName("stock_buying_power")]
         public double? StockBuyingPower { get; set; }
 
-        [JsonProperty("stock_short_value")]
+        [JsonPropertyName("stock_short_value")]
         public int? StockShortValue { get; set; }
     }
 }

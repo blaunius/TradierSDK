@@ -1,55 +1,55 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Order
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int? Id { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string? Type { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string? Symbol { get; set; }
 
-        [JsonProperty("side")]
+        [JsonPropertyName("side")]
         public string? Side { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public double? Quantity { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string? Status { get; set; }
 
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public string? Duration { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public double? Price { get; set; }
 
-        [JsonProperty("avg_fill_price")]
+        [JsonPropertyName("avg_fill_price")]
         public double? AvgFillPrice { get; set; }
 
-        [JsonProperty("exec_quantity")]
+        [JsonPropertyName("exec_quantity")]
         public double? ExecQuantity { get; set; }
 
-        [JsonProperty("last_fill_price")]
+        [JsonPropertyName("last_fill_price")]
         public double? LastFillPrice { get; set; }
 
-        [JsonProperty("last_fill_quantity")]
+        [JsonPropertyName("last_fill_quantity")]
         public double? LastFillQuantity { get; set; }
 
-        [JsonProperty("remaining_quantity")]
+        [JsonPropertyName("remaining_quantity")]
         public double? RemainingQuantity { get; set; }
 
-        [JsonProperty("create_date")]
+        [JsonPropertyName("create_date")]
         public DateTime? CreateDate { get; set; }
 
-        [JsonProperty("transaction_date")]
+        [JsonPropertyName("transaction_date")]
         public DateTime? TransactionDate { get; set; }
 
-        [JsonProperty("class")]
+        [JsonPropertyName("class")]
         public string? Class { get; set; }
     }
 }

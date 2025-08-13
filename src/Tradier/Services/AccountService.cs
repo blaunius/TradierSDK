@@ -20,17 +20,17 @@ namespace Tradier.Services
 
         public Task<UserProfileResponse> GetUserProfile()
         {
-            return client.GetDataAsync<UserProfileResponse>("user/profile");
+            return client.GetResponse<UserProfileResponse>("user/profile");
         }
 
         public Task<BalanceResponse> GetBalances(string accountId)
         {
-            return client.GetDataAsync<BalanceResponse>($"accounts/{accountId}/balances");
+            return client.GetResponse<BalanceResponse>($"accounts/{accountId}/balances");
         }
 
         public Task<PositionsResponse> GetPositions(string accountId)
         {
-            return client.GetDataAsync<PositionsResponse>($"accounts/{accountId}/positions");
+            return client.GetResponse<PositionsResponse>($"accounts/{accountId}/positions");
         }
 
         public Task<List<Event>> GetHistory([Required] string accountId, GetHistoryRequestOptions? query = null)

@@ -1,25 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Trade
     {
-        [JsonProperty("commission")]
+        [JsonPropertyName("commission")]
         public double? Commission { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string? Description { get; set; }
 
-        [JsonProperty("price")]
+        [JsonPropertyName("price")]
         public double? Price { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public double? Quantity { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string? Symbol { get; set; }
 
-        [JsonProperty("trade_type")]
+        [JsonPropertyName("trade_type")]
         public string? TradeType { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualBasic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +10,16 @@ namespace Tradier.Model
 {
     public class Expiration
     {
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public string? Date { get; set; }
 
-        [JsonProperty("contract_size")]
+        [JsonPropertyName("contract_size")]
         public int? ContractSize { get; set; }
 
-        [JsonProperty("expiration_type")]
+        [JsonPropertyName("expiration_type")]
         public string? ExpirationType { get; set; }
 
-        [JsonProperty("strikes")]
+        [JsonPropertyName("strikes")]
         public IEnumerable<double>? Strikes { get; set; }
     }
 }

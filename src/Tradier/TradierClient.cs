@@ -5,13 +5,13 @@ namespace Tradier
 {
     public partial class TradierClient : ITradierClient
     {
-        public async Task<TResponse> GetDataAsync<TResponse>(string endpoint) where TResponse : TradierResponse, new()
+        public Task<TResponse> GetResponse<TResponse>(string endpoint) where TResponse : TradierResponse, new()
         {
             TResponse response = new();
             var rq = new HttpRequestMessage(HttpMethod.Get, new Uri(client.BaseAddress, endpoint));
-            var rs = await this.client.SendAsync(rq);
-            await response.Parse(rs);
-            return response;            
+            var rs = this.client.SendAsync(rq).GetAwaiter().GetResult();
+            response.Parse(rs).GetAwaiter().GetResult();
+            return Task.FromResult(response);
         }
     }
 

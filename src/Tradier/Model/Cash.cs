@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Cash
     {
-        [JsonProperty("cash_available")]
+        [JsonPropertyName("cash_available")]
         public double? CashAvailable { get; set; }
 
-        [JsonProperty("sweep")]
+        [JsonPropertyName("sweep")]
         public int? Sweep { get; set; }
 
-        [JsonProperty("unsettled_funds")]
+        [JsonPropertyName("unsettled_funds")]
         public double? UnsettledFunds { get; set; }
     }
 }

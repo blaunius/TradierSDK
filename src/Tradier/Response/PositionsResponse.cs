@@ -1,25 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Text.Json.Serialization;
 namespace Tradier.Response
 {
     public class PositionsResponse : TradierResponse
     {
-        [JsonProperty("positions")]
+        [JsonPropertyName("positions")]
         private string? positionsRaw { get; set; }
-        public List<Model.Position> Positions { get; set; } = new();
+        public List<Model.Position>? Positions { get; internal set; }
         internal override void Deserialize()
         {
-            this.positionsRaw = Newtonsoft.Json.JsonConvert.DeserializeObject<PositionsResponse>(this.RawResponse)?.positionsRaw;
-            if (positionsRaw == "null")
-                Positions = new();
-            else
+            if (IsSuccessful)
             {
-                Positions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Model.Position>>(positionsRaw!) ?? new();
+                this.positionsRaw = System.Text.Json.JsonSerializer.Deserialize<PositionsResponse>(this.RawResponse)?.positionsRaw;
+                if (positionsRaw != null && positionsRaw != "null")
+                    Positions = System.Text.Json.JsonSerializer.Deserialize<List<Model.Position>>(positionsRaw) ?? [];
+                else Positions = [];
             }
         }
     }

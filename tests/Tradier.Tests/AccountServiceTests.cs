@@ -26,7 +26,7 @@ namespace Tradier.Tests
             AssertResponse(myProfile);
             var id = myProfile.Profile.Id;
 
-            //var myBalance = await service.GetBalances(id);
+            var myBalance = await service.GetBalances(id);
             //AssertResponse(myBalance);
 
             var myPositions = await service.GetPositions(id);
@@ -38,8 +38,7 @@ namespace Tradier.Tests
         void AssertResponse(Response.TradierResponse rs)
         {
             Assert.IsNotNull(rs);
-            Assert.IsTrue(rs.Successful, $"Response was not successful for {rs.GetType().Name}");
-            Assert.IsNotNull(rs.Response, $"Response object was null for {rs.GetType().Name}");
+            Assert.IsTrue(rs.IsSuccessful, $"Response was not successful for {rs.GetType().Name}");
             Assert.IsNotNull(rs.RawResponse, $"Raw response was null for {rs.GetType().Name}");
             Assert.IsFalse(string.IsNullOrWhiteSpace(rs.RawResponse), $"Raw response was empty for {rs.GetType().Name}");
         }

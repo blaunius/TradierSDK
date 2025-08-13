@@ -9,15 +9,12 @@ namespace Tradier.Response
     public abstract class TradierResponse
     {
         public string RawResponse { get; internal set; } = null!;
-        public bool Successful { get; internal set; }
-        public HttpResponseMessage Response { get; private set; } = null!;
+        public bool IsSuccessful { get; internal set; }
         internal Task Parse(HttpResponseMessage rs)
         {
-            Response = rs;
             RawResponse = rs.Content.ReadAsStringAsync().Result;
-            Successful = rs.IsSuccessStatusCode;
-            if (Successful)
-                Deserialize();
+            IsSuccessful = rs.IsSuccessStatusCode;
+            Deserialize();
             return Task.CompletedTask;
         }
         internal virtual void Deserialize()

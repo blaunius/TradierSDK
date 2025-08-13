@@ -1,22 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Position
     {
-        [JsonProperty("cost_basis")]
+        [JsonPropertyName("cost_basis")]
         public double? CostBasis { get; set; }
 
-        [JsonProperty("date_acquired")]
+        [JsonPropertyName("date_acquired")]
         public DateTime? DateAcquired { get; set; }
 
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int? Id { get; set; }
 
-        [JsonProperty("quantity")]
+        [JsonPropertyName("quantity")]
         public double? Quantity { get; set; }
 
-        [JsonProperty("symbol")]
+        [JsonPropertyName("symbol")]
         public string? Symbol { get; set; }
     }
 }

@@ -1,70 +1,70 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class Balance
     {
-        [JsonProperty("option_short_value")]
+        [JsonPropertyName("option_short_value")]
         public int? OptionShortValue { get; set; }
 
-        [JsonProperty("total_equity")]
+        [JsonPropertyName("total_equity")]
         public double? TotalEquity { get; set; }
 
-        [JsonProperty("account_number")]
+        [JsonPropertyName("account_number")]
         public string? AccountNumber { get; set; }
 
-        [JsonProperty("account_type")]
+        [JsonPropertyName("account_type")]
         public string? AccountType { get; set; }
 
-        [JsonProperty("close_pl")]
+        [JsonPropertyName("close_pl")]
         public double? ClosePl { get; set; }
 
-        [JsonProperty("current_requirement")]
+        [JsonPropertyName("current_requirement")]
         public double? CurrentRequirement { get; set; }
 
-        [JsonProperty("equity")]
+        [JsonPropertyName("equity")]
         public int? Equity { get; set; }
 
-        [JsonProperty("long_market_value")]
+        [JsonPropertyName("long_market_value")]
         public double? LongMarketValue { get; set; }
 
-        [JsonProperty("market_value")]
+        [JsonPropertyName("market_value")]
         public double? MarketValue { get; set; }
 
-        [JsonProperty("open_pl")]
+        [JsonPropertyName("open_pl")]
         public double? OpenPl { get; set; }
 
-        [JsonProperty("option_long_value")]
+        [JsonPropertyName("option_long_value")]
         public double? OptionLongValue { get; set; }
 
-        [JsonProperty("option_requirement")]
+        [JsonPropertyName("option_requirement")]
         public int? OptionRequirement { get; set; }
 
-        [JsonProperty("pending_orders_count")]
+        [JsonPropertyName("pending_orders_count")]
         public int? PendingOrdersCount { get; set; }
 
-        [JsonProperty("short_market_value")]
+        [JsonPropertyName("short_market_value")]
         public int? ShortMarketValue { get; set; }
 
-        [JsonProperty("stock_long_value")]
+        [JsonPropertyName("stock_long_value")]
         public double? StockLongValue { get; set; }
 
-        [JsonProperty("total_cash")]
+        [JsonPropertyName("total_cash")]
         public double? TotalCash { get; set; }
 
-        [JsonProperty("uncleared_funds")]
+        [JsonPropertyName("uncleared_funds")]
         public int? UnclearedFunds { get; set; }
 
-        [JsonProperty("pending_cash")]
+        [JsonPropertyName("pending_cash")]
         public int? PendingCash { get; set; }
 
-        [JsonProperty("margin")]
+        [JsonPropertyName("margin")]
         public Margin? Margin { get; set; }
 
-        [JsonProperty("cash")]
+        [JsonPropertyName("cash")]
         public Cash? Cash { get; set; }
 
-        [JsonProperty("pdt")]
+        [JsonPropertyName("pdt")]
         public Pdt? Pdt { get; set; }
     }
 }

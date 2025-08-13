@@ -1,16 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-#nullable disable
+﻿#nullable disable
 namespace Tradier
 {
     public static class TradierConfig
     {
         private static bool IsUsingSandboxAndLiveClients = false;
-        private static ITradierClient defaultClient;
         internal static ITradierClient DefaultClient
         {
             get
@@ -31,6 +24,7 @@ namespace Tradier
                 defaultClient = value;
             }
         }
+        private static ITradierClient defaultClient;
         public static string AccessToken { get; set; }
         public static string RedirectUri { get; set; }
     }

@@ -1,25 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Tradier.Model
 {
     public class HistoricalQuote
     {
-        [JsonProperty("date")]
+        [JsonPropertyName("date")]
         public string? Date { get; set; }
 
-        [JsonProperty("open")]
+        [JsonPropertyName("open")]
         public double? Open { get; set; }
 
-        [JsonProperty("high")]
+        [JsonPropertyName("high")]
         public double? High { get; set; }
 
-        [JsonProperty("low")]
+        [JsonPropertyName("low")]
         public double? Low { get; set; }
 
-        [JsonProperty("close")]
+        [JsonPropertyName("close")]
         public double? Close { get; set; }
 
-        [JsonProperty("volume")]
+        [JsonPropertyName("volume")]
         public int? Volume { get; set; }
     }
 }
