@@ -11,7 +11,6 @@ namespace Tradier.Response
         public Model.Balance? Balance { get; set; }
         internal override void Deserialize()
         {
-            if (this.IsSuccessful)
                 this.Balance = System.Text.Json.JsonSerializer.Deserialize<BalanceResponse>(this.RawResponse)?.Balance ?? new();
         }
     }

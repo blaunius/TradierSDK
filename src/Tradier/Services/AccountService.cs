@@ -39,18 +39,20 @@ namespace Tradier.Services
             return client.GetResponse<AccountHistoryResponse>($"accounts/{accountId}/history?{query.ParseQueryString()}");
         }
 
-        public Task<List<ClosedPosition>> GetGainLoss(string accountId, GainLossOptions? query = null)
+        public Task<AccountGainLossResponse> GetGainLoss(string accountId, GainLossOptions? query = null)
         {
-            throw new NotImplementedException(nameof(GetGainLoss));
+            query ??= new GainLossOptions();
+            return client.GetResponse<AccountGainLossResponse>($"accounts/{accountId}/gainloss?{query.ParseQueryString()}");
         }
 
-        public Task<List<Order>> GetOrders(string accountId, bool includeTags = false, int? page = null)
+        public Task<OrdersResponse> GetOrders(string accountId, bool includeTags = false, int? page = null)
         {
-            throw new NotImplementedException(nameof(GetOrders));
+            return client.GetResponse<OrdersResponse>($"accounts/{accountId}/orders?include_tags={includeTags.ToString().ToLowerInvariant()}{(page.HasValue ? $"&page={page.Value}" : "")}");
         }
 
-        public Task<Order> GetOrder(string accountId, string id, bool includeTags = false)
+        public Task<OrderResponse> GetOrder(string accountId, string id, bool includeTags = false)
         {
+            return client.GetResponse<OrderResponse>($"accounts/{accountId}/orders/{id}?include_tags={includeTags.ToString().ToLowerInvariant()}");
             throw new NotImplementedException(nameof(GetOrder));
         }
     }

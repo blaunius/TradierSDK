@@ -5,14 +5,15 @@ namespace Tradier.Response
 {
     public class AccountHistoryResponse : TradierResponse
     {
-        [JsonPropertyName("events")]
-        public List<Event>? Events { get; set; }
+        public IList<Event>? Events { get; set; }
+
+        [JsonPropertyName("history")]
+        public string? _events { get; set; }
         internal override void Deserialize()
         {
-            if (IsSuccessful)
-            {
-                Events = System.Text.Json.JsonSerializer.Deserialize<AccountHistoryResponse>(this.RawResponse)?.Events ?? [];
-            }
+            _events = System.Text.Json.JsonSerializer.Deserialize<AccountHistoryResponse>(this.RawResponse)?._events;
+            if (_events != null && _events != "null")
+                Events = System.Text.Json.JsonSerializer.Deserialize<IList<Event>>(_events);
         }
     }
 }

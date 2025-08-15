@@ -42,6 +42,27 @@ namespace Tradier.Tests
                 Start = DateTime.Now.AddDays(-30)
             });
             AssertResponse(history);
+            AssertResponse(historyWithQuery);
+
+            var accountGainLoss = await service.GetGainLoss(id);
+            var accountGainLossWithQuery = await service.GetGainLoss(id, new Request.GainLossOptions()
+            {
+                End = DateTime.Now,
+                Start = DateTime.Now.AddDays(-30),
+                Limit = "10",
+                Page = "1",
+                Sort = Enumerations.SortDirection.Asc,
+                SortBy = Enumerations.SortResult.OpenDate,
+                Symbol = "AAPL"
+            });
+            AssertResponse(accountGainLoss);
+            AssertResponse(accountGainLossWithQuery);
+
+            var orders = await service.GetOrders(id);
+            var order = await service.GetOrder(id, "1");
+            AssertResponse(orders);
+            AssertResponse(order);
+
         }
 
         void AssertResponse(Response.TradierResponse rs)
