@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tradier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Tradier.Services;
 #nullable disable
-namespace Tradier.Tests
+namespace Tradier.Tests.Services
 {
     [TestClass()]
-    public class AccountServiceTests : Initializer
+    public class AccountServiceTests : ServiceTestBase
     {
-        private AccountService service;
+        public virtual AccountService service { get; set; }
+
         [TestInitialize()]
-        public void SetService()
+        public override void SetService()
         {
             service = new AccountService(Client);
         }
 
         [TestMethod()]
-        public async Task TradierClientTest()
+        public async Task AccountService()
         {
             var myProfile = await service.GetUserProfile();
             AssertResponse(myProfile);
@@ -63,14 +63,6 @@ namespace Tradier.Tests
             AssertResponse(orders);
             AssertResponse(order);
 
-        }
-
-        void AssertResponse(Response.TradierResponse rs)
-        {
-            Assert.IsNotNull(rs);
-            Assert.IsTrue(rs.IsSuccessful, $"Response was not successful for {rs.GetType().Name}");
-            Assert.IsNotNull(rs.RawResponse, $"Raw response was null for {rs.GetType().Name}");
-            Assert.IsFalse(string.IsNullOrWhiteSpace(rs.RawResponse), $"Raw response was empty for {rs.GetType().Name}");
         }
     }
 }
