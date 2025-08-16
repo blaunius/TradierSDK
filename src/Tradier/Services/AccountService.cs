@@ -53,7 +53,6 @@ namespace Tradier.Services
         public Task<OrderResponse> GetOrder(string accountId, string id, bool includeTags = false)
         {
             return client.GetResponse<OrderResponse>($"accounts/{accountId}/orders/{id}?include_tags={includeTags.ToString().ToLowerInvariant()}");
-            throw new NotImplementedException(nameof(GetOrder));
         }
     }
 }
