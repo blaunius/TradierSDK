@@ -9,5 +9,6 @@ namespace Tradier.Services
     public class TradingService : TradierService
     {
         public TradingService(ITradierClient client) : base(client) { }
+        public TradingService() : base() { }
     }
 }

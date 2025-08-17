@@ -7,6 +7,7 @@ namespace Tradier.Services
     public class MarketDataService : TradierService
     {
         public MarketDataService(ITradierClient client) : base(client) { }
+        public MarketDataService() : base() { }
 
         /// <summary>
         /// Get a list of symbols using a keyword lookup on the symbols description. Results are in descending order by average volume of the security. This can be used for simple search functions.

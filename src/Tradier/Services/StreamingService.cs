@@ -8,6 +8,15 @@ namespace Tradier.Services
 {
     public class StreamingService : TradierService
     {
-        public StreamingService(ITradierClient client) : base(client) { }
+        public StreamingService() : base()
+        {
+            if (this.client is TradierSandboxClient)
+                throw new NotSupportedException("Streaming information can only be used in the production client.");
+        }
+        public StreamingService(ITradierClient tradierClient) : base(tradierClient)
+        {
+            if (tradierClient is TradierSandboxClient)
+                throw new NotSupportedException("Streaming information can only be used in the production client.");
+        }
     }
 }
