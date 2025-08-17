@@ -16,19 +16,14 @@ namespace Tradier.Services.Tests
         [TestInitialize()]
         public override void SetService()
         {
-            service = new MarketDataService(Client);
-        }
-
-        [TestMethod()]
-        public void MarketDataServiceTest()
-        {
-            Assert.Fail();
+            this.service = new MarketDataService(base.Client);
         }
 
         [TestMethod()]
         public void GetQuotesTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetQuotes(true, "AAPL", "GOOG", "MSFT").Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]

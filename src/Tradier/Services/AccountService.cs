@@ -18,19 +18,19 @@ namespace Tradier.Services
                 throw new NotSupportedException("Account information can only be used in the production client.");
         }
 
-        public Task<UserProfileResponse> GetUserProfile()
+        public Task<AccountProfileResponse> GetUserProfile()
         {
-            return client.GetResponse<UserProfileResponse>("user/profile");
+            return client.GetResponse<AccountProfileResponse>("user/profile");
         }
 
-        public Task<BalanceResponse> GetBalances(string accountId)
+        public Task<AccountBalancesResponse> GetBalances(string accountId)
         {
-            return client.GetResponse<BalanceResponse>($"accounts/{accountId}/balances");
+            return client.GetResponse<AccountBalancesResponse>($"accounts/{accountId}/balances");
         }
 
-        public Task<PositionsResponse> GetPositions(string accountId)
+        public Task<AccountPositionsResponse> GetPositions(string accountId)
         {
-            return client.GetResponse<PositionsResponse>($"accounts/{accountId}/positions");
+            return client.GetResponse<AccountPositionsResponse>($"accounts/{accountId}/positions");
         }
 
         public Task<AccountHistoryResponse> GetHistory(string accountId, GetHistoryRequestOptions? query = null)
@@ -45,14 +45,14 @@ namespace Tradier.Services
             return client.GetResponse<AccountGainLossResponse>($"accounts/{accountId}/gainloss?{query.ParseQueryString()}");
         }
 
-        public Task<OrdersResponse> GetOrders(string accountId, bool includeTags = false, int? page = null)
+        public Task<AccountOrdersResponse> GetOrders(string accountId, bool includeTags = false, int? page = null)
         {
-            return client.GetResponse<OrdersResponse>($"accounts/{accountId}/orders?include_tags={includeTags.ToString().ToLowerInvariant()}{(page.HasValue ? $"&page={page.Value}" : "")}");
+            return client.GetResponse<AccountOrdersResponse>($"accounts/{accountId}/orders?include_tags={includeTags.ToString().ToLowerInvariant()}{(page.HasValue ? $"&page={page.Value}" : "")}");
         }
 
-        public Task<OrderResponse> GetOrder(string accountId, string id, bool includeTags = false)
+        public Task<AccountOrderResponse> GetOrder(string accountId, string id, bool includeTags = false)
         {
-            return client.GetResponse<OrderResponse>($"accounts/{accountId}/orders/{id}?include_tags={includeTags.ToString().ToLowerInvariant()}");
+            return client.GetResponse<AccountOrderResponse>($"accounts/{accountId}/orders/{id}?include_tags={includeTags.ToString().ToLowerInvariant()}");
         }
     }
 }

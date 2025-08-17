@@ -1,5 +1,6 @@
 ﻿using Tradier.Model;
 using Tradier.Request;
+using Tradier.Response;
 
 namespace Tradier.Services
 {
@@ -10,7 +11,7 @@ namespace Tradier.Services
         /// <summary>
         /// Get a list of symbols using a keyword lookup on the symbols description. Results are in descending order by average volume of the security. This can be used for simple search functions.
         /// </summary>
-        public Task<List<Quote>> GetQuotes(bool showGreeks, params string[] symbols)
+        public Task<MarketQuotesResponse> GetQuotes(bool showGreeks, params string[] symbols)
         {
             throw new NotImplementedException();
         }
@@ -18,7 +19,7 @@ namespace Tradier.Services
         /// Get all quotes in an option chain.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<Option>> GetOptionChains(string symbol, DateTime expiration, bool includeAllGreeks = false)
+        public Task<MarketOptionChainsResponse> GetOptionChains(string symbol, DateTime expiration, bool includeAllGreeks = false)
         {
             throw new NotImplementedException();
         }
@@ -26,7 +27,7 @@ namespace Tradier.Services
         /// Get an options strike prices for a specified expiration date.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<decimal>> GetOptionStrikes(string symbol, DateTime expiration, bool includeAllRoots = false)
+        public Task<MarketOptionStikesResponse> GetOptionStrikes(string symbol, DateTime expiration, bool includeAllRoots = false)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +38,7 @@ namespace Tradier.Services
         /// This will also ensure any unique options due to corporate actions(AAPL1) are returned.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<Expiration>> GetOptionExpirations(string symbol, ExpirationLookupOptions? options = null)
+        public Task<MarketOptionExpirationResponse> GetOptionExpirations(string symbol, ExpirationLookupOptions? options = null)
         {
             options ??= new();
             throw new NotImplementedException();
@@ -47,7 +48,7 @@ namespace Tradier.Services
         /// This will include additional option roots (ex. SPXW, RUTW) if applicable.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<OptionSymbol>> LookupOptionSymbols(string underlying)
+        public Task<MarketOptionSymbolsResponse> LookupOptionSymbols(string underlying)
         {
             throw new NotImplementedException();
         }
@@ -60,7 +61,7 @@ namespace Tradier.Services
         /// Historical options data is not available for expired options.
         /// </remarks>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<HistoricalQuote>> GetHistoricalQuotes(string symbol, HistoricalQuotesLookupOptions? options = null)
+        public Task<MarketHistoricalQuotesResponse> GetHistoricalQuotes(string symbol, HistoricalQuotesLookupOptions? options = null)
         {
             options ??= new();
             throw new NotImplementedException();
@@ -74,7 +75,7 @@ namespace Tradier.Services
         /// This results in a very large data set for high-volume symbols, so the time slice needs to be much smaller to keep downloads time reasonable.
         /// </remarks>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<TimeAndSales>> GetTimeAndSales(string symbol, TimeAndSalesOptions? options = null)
+        public Task<MarketTimeAndSalesResponse> GetTimeAndSales(string symbol, TimeAndSalesOptions? options = null)
         {
             throw new NotImplementedException();
         }
@@ -83,7 +84,7 @@ namespace Tradier.Services
         /// The list is quite comprehensive and can result in a long download response time.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<IEnumerable<ETBSecurity>> GetETBSecurities(CancellationToken token = default)
+        public Task<MarketETBSecuritiesResponse> GetETBSecurities(CancellationToken token = default)
         {
             throw new NotImplementedException();
         }
@@ -92,7 +93,7 @@ namespace Tradier.Services
         /// If programming logic on whether the market is open/closed – this API call should be used to determine the current state.
         /// </summary>        
         /// <exception cref="NotImplementedException"></exception>
-        public Task<Clock> GetClock(bool delayed = false)
+        public Task<MarketClockResponse> GetClock(bool delayed = false)
         {
             throw new NotImplementedException();
         }
@@ -103,7 +104,7 @@ namespace Tradier.Services
         /// <param name="month">Defaults to current month</param>
         /// <param name="year">Defaults to current year</param>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<Calendar> GetCalendar(int? month = null, int? year = null)
+        public Task<MarketCalendarResponse> GetCalendar(int? month = null, int? year = null)
         {
             month ??= DateTime.Now.Month;
             year ??= DateTime.Now.Year;
@@ -115,7 +116,7 @@ namespace Tradier.Services
         /// This can be used for simple search functions.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<Security>> SearchCompanies(string searchQuery, bool showIndexes = true)
+        public Task<MarketSearchCompaniesResponse> SearchCompanies(string searchQuery, bool showIndexes = true)
         {
             throw new NotImplementedException();
         }
@@ -125,7 +126,7 @@ namespace Tradier.Services
         /// <param name="exchanges">A CSV string of exchanges</param>
         /// <parm name="securityTypes">A CSV string of security types (Stock, option, etf, index)</param>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<Security>> LookupSymbol(string symbol, string securityTypes = "All", string exchanges = "All")
+        public Task<MarketLookupSymbolResponse> LookupSymbol(string symbol, string securityTypes = "All", string exchanges = "All")
         {
             throw new NotImplementedException();
         }

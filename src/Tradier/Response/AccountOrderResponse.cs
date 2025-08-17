@@ -8,13 +8,13 @@ using Tradier.Model;
 
 namespace Tradier.Response
 {
-    public class OrderResponse : TradierResponse
+    public class AccountOrderResponse : TradierResponse
     {
         [JsonPropertyName("order")]
         public Order? Order { get; set; }
         internal override void Deserialize()
         {
-            Order = System.Text.Json.JsonSerializer.Deserialize<OrderResponse>(this.RawResponse)?.Order;
+            Order = System.Text.Json.JsonSerializer.Deserialize<AccountOrderResponse>(this.RawResponse)?.Order;
         }
     }
 }
