@@ -13,7 +13,7 @@ namespace Tradier.Services
         /// </summary>
         public Task<MarketQuotesResponse> GetQuotes(bool showGreeks, params string[] symbols)
         {
-            throw new NotImplementedException();
+            return client.GetResponse<MarketQuotesResponse>($"markets/quotes?greeks={showGreeks.ToString().ToLower()}&symbols={string.Join(',', symbols ?? [])}");
         }
         /// <summary>
         /// Get all quotes in an option chain.
