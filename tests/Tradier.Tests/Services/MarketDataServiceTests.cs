@@ -36,61 +36,83 @@ namespace Tradier.Services.Tests
         [TestMethod()]
         public void GetOptionStrikesTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetOptionStrikes("AAPL", new DateTime(2025, 8, 29), true).Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void GetOptionExpirationsTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetOptionExpirations("AAPL", new() { IncludeAllRoots = true, ShowContractSize = true, ShowExpirationType = true, ShowStrikes = true }).Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void LookupOptionSymbolsTest()
         {
-            Assert.Fail();
+            var rs = this.service.LookupOptionSymbols("AAPL").Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void GetHistoricalQuotesTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetHistoricalQuotes("AAPL", new Request.MarketHistoricalQuotesRequest()
+            {
+                Start = DateTime.Now.AddDays(-60),
+                End = DateTime.Now.AddDays(60),
+                Interval = Enumerations.IntervalType.Daily,
+                SessionFilter = Enumerations.SessionFilter.Open
+            }).Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void GetTimeAndSalesTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetTimeAndSales("AAPL", new Request.MarketTimeAndSalesRequest()
+            {
+                Start = DateTime.Now.AddDays(-60),
+                End = DateTime.Now.AddDays(60),
+                Interval = Enumerations.IntervalScope.OneMinute,
+                Session = Enumerations.SessionFilter.All
+            }).Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void GetETBSecuritiesTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetETBSecurities().Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void GetClockTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetClock().Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void GetCalendarTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetCalendar().Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void SearchCompaniesTest()
         {
-            Assert.Fail();
+            var rs = this.service.SearchCompanies("AAPL").Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
         public void LookupSymbolTest()
         {
-            Assert.Fail();
+            var rs = this.service.LookupSymbol("AAPL").Result;
+            this.AssertResponse(rs);
         }
     }
 }
