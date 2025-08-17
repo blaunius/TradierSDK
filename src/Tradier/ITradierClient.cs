@@ -6,7 +6,8 @@ namespace Tradier
     public interface ITradierClient
     {
         public Task<TData> GetResponse<TData>(
-              string endpoint) where TData : TradierResponse, new();
+              string endpoint, 
+              CancellationToken token = default) where TData : TradierResponse, new();
 
     }
 }

@@ -29,7 +29,8 @@ namespace Tradier.Services.Tests
         [TestMethod()]
         public void GetOptionChainsTest()
         {
-            Assert.Fail();
+            var rs = this.service.GetOptionChains("AAPL", new DateTime(2025, 8, 29), true).Result;
+            this.AssertResponse(rs);
         }
 
         [TestMethod()]
