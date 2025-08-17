@@ -1,15 +1,21 @@
-﻿using Tradier.Model;
+﻿using System.Text.Json.Serialization;
+using Tradier.Model;
 
 namespace Tradier.Response
 {
     public class MarketHistoricalQuotesResponse : TradierResponse
     {
-        public List<HistoricalQuote>? Quotes { get; set; }
-        internal string? quotes { get; set; }
+        [JsonPropertyName("history")]
+        public HistoricalQuoteContainer? Data { get; set; }
+        public class HistoricalQuoteContainer
+        {
+            [JsonPropertyName("day")]
+            public List<HistoricalQuote>? Quotes { get; set; }
+        }
         internal override void Deserialize()
         {
-            base.Deserialize();
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketHistoricalQuotesResponse>(this.RawResponse)?.Data;
         }
-        
+
     }
 }

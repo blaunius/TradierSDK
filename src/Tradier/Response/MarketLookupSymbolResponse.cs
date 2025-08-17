@@ -1,13 +1,20 @@
-﻿using Tradier.Model;
+﻿using System.Text.Json.Serialization;
+using Tradier.Model;
 
 namespace Tradier.Response
 {
     public class MarketLookupSymbolResponse : TradierResponse
     {
-        public List<Security>? Securities { get; set; }
+        [JsonPropertyName("securities")]
+        public LookupContainer? Data { get; set; }
+        public class LookupContainer
+        {
+            [JsonPropertyName("security")]
+            public List<Security> Securities { get; set; } = new();
+        }
         internal override void Deserialize()
         {
-            base.Deserialize();
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketLookupSymbolResponse>(this.RawResponse)?.Data ?? new();
         }
     }
 }

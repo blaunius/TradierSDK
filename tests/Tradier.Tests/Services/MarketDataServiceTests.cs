@@ -61,7 +61,7 @@ namespace Tradier.Services.Tests
             {
                 Start = DateTime.Now.AddDays(-60),
                 End = DateTime.Now.AddDays(60),
-                Interval = Enumerations.IntervalType.Daily,
+                Interval = Enumerations.IntervalType.Monthly,
                 SessionFilter = Enumerations.SessionFilter.Open
             }).Result;
             this.AssertResponse(rs);
@@ -72,7 +72,7 @@ namespace Tradier.Services.Tests
         {
             var rs = this.service.GetTimeAndSales("AAPL", new Request.MarketTimeAndSalesRequest()
             {
-                Start = DateTime.Now.AddDays(-60),
+                Start = DateTime.Now,
                 End = DateTime.Now.AddDays(60),
                 Interval = Enumerations.IntervalScope.OneMinute,
                 Session = Enumerations.SessionFilter.All

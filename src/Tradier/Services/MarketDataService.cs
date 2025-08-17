@@ -113,9 +113,6 @@ namespace Tradier.Services
         {
             return client.GetResponse<MarketSearchCompaniesResponse>($"markets/search?q={searchQuery}&indexes={showIndexes.ToString().ToLower()}");
         }
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="exchanges">A CSV string of exchanges</param>
         /// <parm name="securityTypes">A CSV string of security types (Stock, option, etf, index, etc)</param>
         public Task<MarketLookupSymbolResponse> LookupSymbol(string symbol, string securityTypes = "All", string exchanges = "All")

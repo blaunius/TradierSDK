@@ -20,6 +20,6 @@ namespace Tradier.Model
         public string? ExpirationType { get; set; }
 
         [JsonPropertyName("strikes")]
-        public IEnumerable<double>? Strikes { get; set; }
+        public Response.MarketOptionStikesResponse.StrikeData? Strikes { get; set; }
     }
 }
