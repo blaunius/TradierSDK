@@ -1,14 +1,20 @@
-﻿using Tradier.Model;
+﻿using System.Text.Json.Serialization;
+using Tradier.Model;
 
 namespace Tradier.Response
 {
     public class MarketOptionChainsResponse : TradierResponse
     {
-        public List<Option>? Options { get; set; }
-        internal string? options { get; set; }
+        [JsonPropertyName("options")]
+        public OptionsContainer? Data { get; set; }
+        public class OptionsContainer
+        {
+            [JsonPropertyName("option")]
+            public List<Option>? Options { get; set; }
+        }
         internal override void Deserialize()
         {
-            base.Deserialize();
+            this.Data= System.Text.Json.JsonSerializer.Deserialize<MarketOptionChainsResponse>(this.RawResponse)?.Data;
         }
     }
 }
