@@ -2,13 +2,11 @@
 
 namespace Tradier.Model
 {
-    public class Option
+    public class Option : Security
     {
+
         [JsonPropertyName("option_type")]
         public string? OptionType { get; set; }
-
-        [JsonPropertyName("description")]
-        public string? Description { get; set; }
 
         [JsonPropertyName("quantity")]
         public double? Quantity { get; set; }
