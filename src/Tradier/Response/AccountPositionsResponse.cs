@@ -4,14 +4,15 @@ namespace Tradier.Response
     public class AccountPositionsResponse : TradierResponse
     {
         [JsonPropertyName("positions")]
-        private string? positionsRaw { get; set; }
-        public IList<Model.Position>? Positions { get; internal set; }
+        private AccountPositionsContainer? Data { get; set; }
+        public class AccountPositionsContainer
+        {
+            [JsonPropertyName("position")]
+            public List<Model.Position> Positions { get; set; } = new();
+        }
         internal override void Deserialize()
         {
-                this.positionsRaw = System.Text.Json.JsonSerializer.Deserialize<AccountPositionsResponse>(this.RawResponse)?.positionsRaw;
-                if (positionsRaw != null && positionsRaw != "null")
-                    Positions = System.Text.Json.JsonSerializer.Deserialize<IList<Model.Position>>(positionsRaw) ?? [];
-                else Positions = [];
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<AccountPositionsResponse>(this.RawResponse)?.Data;            
         }
     }
 }

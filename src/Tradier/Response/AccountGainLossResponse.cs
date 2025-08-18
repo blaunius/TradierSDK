@@ -6,18 +6,22 @@ namespace Tradier.Response
     public class AccountGainLossResponse : TradierResponse
     {
         [JsonPropertyName("gainloss")]
-        public string? gainloss { get; set; }
-        public IList<ClosedPosition>? GainLoss { get; set; }
+        public AccountGainLossContainer? Data { get; set; }
+        public class AccountGainLossContainer
+        {
+            [JsonPropertyName("closed_position")]
+            public List<ClosedPosition> GainLoss { get; set; } = new();
+        }
+
         internal override void Deserialize()
         {
-            gainloss = System.Text.Json.JsonSerializer.Deserialize<AccountGainLossResponse>(this.RawResponse)?.gainloss;
-            if (gainloss != null && gainloss != "null")
+            try
             {
-                GainLoss = System.Text.Json.JsonSerializer.Deserialize<IList<ClosedPosition>>(gainloss);
+                Data = System.Text.Json.JsonSerializer.Deserialize<AccountGainLossResponse>(this.RawResponse)?.Data ?? new();
             }
-            else
+            catch (Exception)
             {
-                GainLoss = new List<ClosedPosition>();
+                Data = new();
             }
         }
     }

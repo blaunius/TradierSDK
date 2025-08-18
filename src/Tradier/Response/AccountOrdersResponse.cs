@@ -6,19 +6,16 @@ namespace Tradier.Response
     public class AccountOrdersResponse : TradierResponse
     {
         [JsonPropertyName("orders")]
-        string? _orders { get; set; }
-        public IList<Order>? Orders { get; set; }
+        public AccountOrdersContainer? Data { get; set; }
+        public class AccountOrdersContainer
+        {
+            [JsonPropertyName("order")]
+            public List<Order> Orders { get; set; } = new();
+
+        }
         internal override void Deserialize()
         {
-            _orders = System.Text.Json.JsonSerializer.Deserialize<AccountOrdersResponse>(this.RawResponse)?._orders;
-            if (_orders is null || _orders == "null")
-            {
-                Orders = [];
-            }
-            else
-            {
-                Orders = System.Text.Json.JsonSerializer.Deserialize<AccountOrdersResponse>(this.RawResponse)?.Orders;
-            }
+            Data = System.Text.Json.JsonSerializer.Deserialize<AccountOrdersResponse>(this.RawResponse)?.Data ?? new();            
         }
     }
 }

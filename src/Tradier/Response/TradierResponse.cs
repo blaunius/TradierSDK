@@ -15,7 +15,9 @@ namespace Tradier.Response
             RawResponse = rs.Content.ReadAsStringAsync().Result;
             IsSuccessful = rs.IsSuccessStatusCode;
             if (IsSuccessful)
+            {
                 Deserialize();
+            }
             return Task.CompletedTask;
         }
         internal virtual void Deserialize()
