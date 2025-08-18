@@ -14,7 +14,10 @@ namespace Tradier.Response
         }
         internal override void Deserialize()
         {
-            this.Data = System.Text.Json.JsonSerializer.Deserialize<AccountHistoryResponse>(this.RawResponse)?.Data ?? new();            
+            if (this.RawResponse == "{\"history\":\"null\"}")
+                this.Data = new();
+            else
+                this.Data = System.Text.Json.JsonSerializer.Deserialize<AccountHistoryResponse>(this.RawResponse)?.Data ?? new();
         }
     }
 }

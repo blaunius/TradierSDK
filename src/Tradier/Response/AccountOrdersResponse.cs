@@ -15,7 +15,10 @@ namespace Tradier.Response
         }
         internal override void Deserialize()
         {
-            Data = System.Text.Json.JsonSerializer.Deserialize<AccountOrdersResponse>(this.RawResponse)?.Data ?? new();            
+            if (this.RawResponse == "{\"orders\":\"null\"}")
+                Data = new();
+            else
+                Data = System.Text.Json.JsonSerializer.Deserialize<AccountOrdersResponse>(this.RawResponse)?.Data ?? new();
         }
     }
 }
