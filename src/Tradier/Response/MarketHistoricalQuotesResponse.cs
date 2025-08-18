@@ -10,11 +10,11 @@ namespace Tradier.Response
         public class HistoricalQuoteContainer
         {
             [JsonPropertyName("day")]
-            public List<HistoricalQuote>? Quotes { get; set; }
+            public List<HistoricalQuote> Quotes { get; set; } = new();
         }
         internal override void Deserialize()
         {
-            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketHistoricalQuotesResponse>(this.RawResponse)?.Data;
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketHistoricalQuotesResponse>(this.RawResponse)?.Data ?? new();
         }
 
     }

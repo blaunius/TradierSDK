@@ -15,12 +15,8 @@ namespace Tradier.Response
 
         public class QuotesContainer
         {
-            public QuotesContainer()
-            {
-                Quote = new List<Quote>();
-            }
             [JsonPropertyName("quote")]
-            public List<Quote> Quote { get; set; }
+            public List<Quote> Quote { get; set; } = new();
         }
 
 

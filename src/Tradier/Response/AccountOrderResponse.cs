@@ -14,7 +14,7 @@ namespace Tradier.Response
         public Order? Order { get; set; }
         internal override void Deserialize()
         {
-            Order = System.Text.Json.JsonSerializer.Deserialize<AccountOrderResponse>(this.RawResponse)?.Order;
+            Order = System.Text.Json.JsonSerializer.Deserialize<AccountOrderResponse>(this.RawResponse)?.Order ?? new();
         }
     }
 }

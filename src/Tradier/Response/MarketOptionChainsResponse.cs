@@ -10,11 +10,11 @@ namespace Tradier.Response
         public class OptionsContainer
         {
             [JsonPropertyName("option")]
-            public List<Option>? Options { get; set; }
+            public List<Option> Options { get; set; } = new();
         }
         internal override void Deserialize()
         {
-            this.Data= System.Text.Json.JsonSerializer.Deserialize<MarketOptionChainsResponse>(this.RawResponse)?.Data;
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketOptionChainsResponse>(this.RawResponse)?.Data ?? new();
         }
     }
 }

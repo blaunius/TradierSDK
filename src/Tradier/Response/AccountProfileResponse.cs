@@ -8,7 +8,7 @@ namespace Tradier.Response
         public Model.Profile? Profile { get; set; }
         internal override void Deserialize()
         {
-            this.Profile = System.Text.Json.JsonSerializer.Deserialize<AccountProfileResponse>(this.RawResponse)?.Profile;
+            this.Profile = System.Text.Json.JsonSerializer.Deserialize<AccountProfileResponse>(this.RawResponse)?.Profile ?? new();
         }
     }
 }

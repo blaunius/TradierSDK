@@ -16,7 +16,7 @@ namespace Tradier.Response
         }
         internal override void Deserialize()
         {
-            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketOptionSymbolsResponse>(this.RawResponse)?.Data;
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<MarketOptionSymbolsResponse>(this.RawResponse)?.Data ?? new();
         }
     }
 }

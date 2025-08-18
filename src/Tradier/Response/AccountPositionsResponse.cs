@@ -12,7 +12,7 @@ namespace Tradier.Response
         }
         internal override void Deserialize()
         {
-            this.Data = System.Text.Json.JsonSerializer.Deserialize<AccountPositionsResponse>(this.RawResponse)?.Data;            
+            this.Data = System.Text.Json.JsonSerializer.Deserialize<AccountPositionsResponse>(this.RawResponse)?.Data ?? new();            
         }
     }
 }
