@@ -81,6 +81,8 @@ namespace Tradier.Services
         /// </summary>
         public Task<MarketETBSecuritiesResponse> GetETBSecurities(CancellationToken token = default)
         {
+            if (this.client is TradierSandboxClient)
+                throw new NotSupportedException("ETB Securities can't be requested in the paper trading/sandbox client.");
             return client.GetResponse<MarketETBSecuritiesResponse>("markets/etb", token);
         }
         /// <summary>

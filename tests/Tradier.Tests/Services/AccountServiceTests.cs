@@ -34,7 +34,7 @@ namespace Tradier.Services.Tests
             AssertResponse(myPositions);
 
             var history = await service.GetHistory(id);
-            var historyWithQuery = await service.GetHistory(id, new Request.GetHistoryRequestOptions()
+            var historyWithQuery = await service.GetHistory(id, new Request.AccountHistoryRequest()
             {
                 ActivityType = Enumerations.ActivityType.Trade,
                 End = DateTime.Now,
