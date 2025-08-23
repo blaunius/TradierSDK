@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tradier.Tests;
 #nullable disable
-namespace Tradier.Services.Tests
+namespace Tradier.Tests.Services
 {
     [TestClass()]
     public class MarketDataServiceTests : ServiceTestBase

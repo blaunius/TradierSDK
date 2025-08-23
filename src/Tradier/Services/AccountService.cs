@@ -30,21 +30,21 @@ namespace Tradier.Services
         {
             if (this.client is TradierSandboxClient)
                 throw new NotSupportedException("User Profile information can't be used in the paper trading/sandbox client.");
-            return client.GetResponse<AccountProfileResponse>("user/profile", token);
+            return client.Get<AccountProfileResponse>("user/profile", token);
         }
         /// <summary>
         /// Get balances information for a specific user account. Account balances are calculated on each request during market hours. Each night, balance figures are reconciled with the Tradier clearing firm and used as starting point for the following market session.
         /// </summary>
         public Task<AccountBalancesResponse> GetBalances(string accountId, CancellationToken token = default)
         {
-            return client.GetResponse<AccountBalancesResponse>($"accounts/{accountId}/balances", token);
+            return client.Get<AccountBalancesResponse>($"accounts/{accountId}/balances", token);
         }
         /// <summary>
         /// Get the current positions being held in an account. These positions are updated intraday via trading.
         /// </summary>
         public Task<AccountPositionsResponse> GetPositions(string accountId, CancellationToken token = default)
         {
-            return client.GetResponse<AccountPositionsResponse>($"accounts/{accountId}/positions", token);
+            return client.Get<AccountPositionsResponse>($"accounts/{accountId}/positions", token);
         }
         /// <summary>
         /// Get historical activity for an account. This data originates with our clearing firm and inherently has a few limitations:
@@ -57,7 +57,7 @@ namespace Tradier.Services
             if (this.client is TradierSandboxClient)
                 throw new NotSupportedException("Historical activity can't be used in the paper trading/sandbox client.");
             request ??= new AccountHistoryRequest();
-            return client.GetResponse<AccountHistoryResponse>($"accounts/{accountId}/history?{request.ParseQueryString()}", token);
+            return client.Get<AccountHistoryResponse>($"accounts/{accountId}/history?{request.ParseQueryString()}", token);
         }
         /// <summary>
         /// Get cost basis information for a specific user account. This includes information for all closed positions. Cost basis information is updated through a nightly batch reconciliation process with our clearing firm.
@@ -65,21 +65,21 @@ namespace Tradier.Services
         public Task<AccountGainLossResponse> GetGainLoss(string accountId, GainLossOptions? query = null, CancellationToken token = default)
         {
             query ??= new GainLossOptions();
-            return client.GetResponse<AccountGainLossResponse>($"accounts/{accountId}/gainloss?{query.ParseQueryString()}", token);
+            return client.Get<AccountGainLossResponse>($"accounts/{accountId}/gainloss?{query.ParseQueryString()}", token);
         }
         /// <summary>
         /// Retrieve orders placed within an account. This API will return orders placed for the market session of the present calendar day.
         /// </summary>
         public Task<AccountOrdersResponse> GetOrders(string accountId, bool includeTags = false, int? page = null, CancellationToken token = default)
         {
-            return client.GetResponse<AccountOrdersResponse>($"accounts/{accountId}/orders?include_tags={includeTags.ToString().ToLowerInvariant()}{(page.HasValue ? $"&page={page.Value}" : "")}", token);
+            return client.Get<AccountOrdersResponse>($"accounts/{accountId}/orders?include_tags={includeTags.ToString().ToLowerInvariant()}{(page.HasValue ? $"&page={page.Value}" : "")}", token);
         }
         /// <summary>
         /// Get detailed information about a previously placed order.
         /// </summary>
         public Task<AccountOrderResponse> GetOrder(string accountId, string id, bool includeTags = false, CancellationToken token = default)
         {
-            return client.GetResponse<AccountOrderResponse>($"accounts/{accountId}/orders/{id}?include_tags={includeTags.ToString().ToLowerInvariant()}", token);
+            return client.Get<AccountOrderResponse>($"accounts/{accountId}/orders/{id}?include_tags={includeTags.ToString().ToLowerInvariant()}", token);
         }
     }
 }

@@ -14,21 +14,21 @@ namespace Tradier.Services
         /// </summary>
         public Task<MarketQuotesResponse> GetQuotes(bool showGreeks, params string[] symbols)
         {
-            return client.GetResponse<MarketQuotesResponse>($"markets/quotes?greeks={showGreeks.ToString().ToLower()}&symbols={string.Join(',', symbols ?? [])}");
+            return client.Get<MarketQuotesResponse>($"markets/quotes?greeks={showGreeks.ToString().ToLower()}&symbols={string.Join(',', symbols ?? [])}");
         }
         /// <summary>
         /// Get all quotes in an option chain.
         /// </summary>
         public Task<MarketOptionChainsResponse> GetOptionChains(string symbol, DateTime expiration, bool includeAllGreeks = false, CancellationToken token = default)
         {
-            return client.GetResponse<MarketOptionChainsResponse>($"markets/options/chains?symbol={symbol}&expiration={expiration:yyyy-MM-dd}&greeks={includeAllGreeks.ToString().ToLower()}", token);
+            return client.Get<MarketOptionChainsResponse>($"markets/options/chains?symbol={symbol}&expiration={expiration:yyyy-MM-dd}&greeks={includeAllGreeks.ToString().ToLower()}", token);
         }
         /// <summary>
         /// Get an options strike prices for a specified expiration date.
         /// </summary>
         public Task<MarketOptionStikesResponse> GetOptionStrikes(string symbol, DateTime expiration, bool includeAllRoots = false, CancellationToken token = default)
         {
-            return client.GetResponse<MarketOptionStikesResponse>($"markets/options/strikes?symbol={symbol}&expiration={expiration:yyyy-MM-dd}&includeAllRoots={includeAllRoots.ToString().ToLower()}", token);
+            return client.Get<MarketOptionStikesResponse>($"markets/options/strikes?symbol={symbol}&expiration={expiration:yyyy-MM-dd}&includeAllRoots={includeAllRoots.ToString().ToLower()}", token);
         }
         /// <summary>
         /// Get expiration dates for a particular underlying. 
@@ -39,7 +39,7 @@ namespace Tradier.Services
         public Task<MarketOptionExpirationResponse> GetOptionExpirations(string symbol, MarketOptionExpirationRequest? options = null, CancellationToken token = default)
         {
             options ??= new();
-            return client.GetResponse<MarketOptionExpirationResponse>($"markets/options/expirations?symbol={symbol}&includeAllRoots={options.includeAllRoots}&contractSize={options.showContractSize}&expirationType={options.showExpirationType}&strikes={options.showStrikes}", token);
+            return client.Get<MarketOptionExpirationResponse>($"markets/options/expirations?symbol={symbol}&includeAllRoots={options.includeAllRoots}&contractSize={options.showContractSize}&expirationType={options.showExpirationType}&strikes={options.showStrikes}", token);
         }
         /// <summary>
         /// Get all options symbols for the given underlying. 
@@ -47,7 +47,7 @@ namespace Tradier.Services
         /// </summary>
         public Task<MarketOptionSymbolsResponse> LookupOptionSymbols(string underlying, CancellationToken token = default)
         {
-            return client.GetResponse<MarketOptionSymbolsResponse>($"markets/options/lookup?underlying={underlying}", token);
+            return client.Get<MarketOptionSymbolsResponse>($"markets/options/lookup?underlying={underlying}", token);
         }
         /// <summary>
         /// Get historical pricing for a security.
@@ -60,7 +60,7 @@ namespace Tradier.Services
         public Task<MarketHistoricalQuotesResponse> GetHistoricalQuotes(string symbol, MarketHistoricalQuotesRequest? options = null, CancellationToken token = default)
         {
             options ??= new();
-            return client.GetResponse<MarketHistoricalQuotesResponse>($"markets/history?symbol={symbol}&{options.ParseQuery()}", token);
+            return client.Get<MarketHistoricalQuotesResponse>($"markets/history?symbol={symbol}&{options.ParseQuery()}", token);
         }
         /// <summary>
         /// Time and Sales (timesales) is typically used for charting purposes.
@@ -73,7 +73,7 @@ namespace Tradier.Services
         public Task<MarketTimeAndSalesResponse> GetTimeAndSales(string symbol, MarketTimeAndSalesRequest? options = null, CancellationToken token = default)
         {
             options ??= new();
-            return client.GetResponse<MarketTimeAndSalesResponse>($"markets/timesales?symbol={symbol}&{options.ParseQuery()}", token);
+            return client.Get<MarketTimeAndSalesResponse>($"markets/timesales?symbol={symbol}&{options.ParseQuery()}", token);
         }
         /// <summary>
         /// The ETB list contains securities that are able to be sold short with a Tradier Brokerage account.
@@ -83,7 +83,7 @@ namespace Tradier.Services
         {
             if (this.client is TradierSandboxClient)
                 throw new NotSupportedException("ETB Securities can't be requested in the paper trading/sandbox client.");
-            return client.GetResponse<MarketETBSecuritiesResponse>("markets/etb", token);
+            return client.Get<MarketETBSecuritiesResponse>("markets/etb", token);
         }
         /// <summary>
         /// Get the intraday market status. This call will change and return information pertaining to the current day.
@@ -91,7 +91,7 @@ namespace Tradier.Services
         /// </summary>        
         public Task<MarketClockResponse> GetClock(bool delayed = false, CancellationToken token = default)
         {
-            return client.GetResponse<MarketClockResponse>($"markets/clock?delayed={delayed.ToString().ToLower()}", token);
+            return client.Get<MarketClockResponse>($"markets/clock?delayed={delayed.ToString().ToLower()}", token);
         }
         /// <summary>
         /// Get the market calendar for the current or given month. This can be used to plan ahead regarding strategies.
@@ -104,7 +104,7 @@ namespace Tradier.Services
         {
             month ??= DateTime.Now.Month;
             year ??= DateTime.Now.Year;
-            return client.GetResponse<MarketCalendarResponse>($"markets/calendar?month={month.Value.ToString("00")}&year={year}", token);
+            return client.Get<MarketCalendarResponse>($"markets/calendar?month={month.Value.ToString("00")}&year={year}", token);
         }
         /// <summary>
         /// Get a list of symbols using a keyword lookup on the symbols description. 
@@ -113,13 +113,13 @@ namespace Tradier.Services
         /// </summary>
         public Task<MarketSearchCompaniesResponse> SearchCompanies(string searchQuery, bool showIndexes = true, CancellationToken token = default)
         {
-            return client.GetResponse<MarketSearchCompaniesResponse>($"markets/search?q={searchQuery}&indexes={showIndexes.ToString().ToLower()}", token);
+            return client.Get<MarketSearchCompaniesResponse>($"markets/search?q={searchQuery}&indexes={showIndexes.ToString().ToLower()}", token);
         }
         /// <param name="exchanges">A CSV string of exchanges</param>
         /// <parm name="securityTypes">A CSV string of security types (Stock, option, etf, index, etc)</param>
         public Task<MarketLookupSymbolResponse> LookupSymbol(string symbol, string securityTypes = "All", string exchanges = "All", CancellationToken token = default)
         {
-            return client.GetResponse<MarketLookupSymbolResponse>($"markets/lookup?symbol={symbol}&types={securityTypes}&exchanges={exchanges}", token);
+            return client.Get<MarketLookupSymbolResponse>($"markets/lookup?symbol={symbol}&types={securityTypes}&exchanges={exchanges}", token);
         }
     }
 }

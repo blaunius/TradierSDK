@@ -1,14 +1,48 @@
-﻿using Tradier.Response;
+﻿using System.Net.Mime;
+using System.Text.Json;
+using Tradier.Response;
 using Tradier.Services;
 #nullable disable
 namespace Tradier
 {
     public partial class TradierClient : ITradierClient
     {
-        public Task<TResponse> GetResponse<TResponse>(string endpoint, CancellationToken token = default) where TResponse : TradierResponse, new()
+        public Task<TResponse> Get<TResponse>(string endpoint, CancellationToken token = default) where TResponse : TradierResponse, new()
         {
             TResponse response = new();
             var rq = new HttpRequestMessage(HttpMethod.Get, new Uri(client.BaseAddress, endpoint));
+            var rs = this.client.SendAsync(rq, token).GetAwaiter().GetResult();
+            response.Parse(rs).GetAwaiter().GetResult();
+            return Task.FromResult(response);
+        }
+        public Task<TResponse> Post<TResponse>(string endpoint, Dictionary<string, string> body = null, CancellationToken token = default) where TResponse : TradierResponse, new()
+        {
+            TResponse response = new();
+            var rq = new HttpRequestMessage(HttpMethod.Post, new Uri(client.BaseAddress, endpoint));
+            if (body != null)
+            {
+                rq.Content = new FormUrlEncodedContent(body);
+            }
+            var rs = this.client.SendAsync(rq, token).GetAwaiter().GetResult();
+            response.Parse(rs).GetAwaiter().GetResult();
+            return Task.FromResult(response);
+        }
+        public Task<TResponse> Put<TResponse>(string endpoint, Dictionary<string, string> body = null, CancellationToken token = default) where TResponse : TradierResponse, new()
+        {
+            TResponse response = new();
+            var rq = new HttpRequestMessage(HttpMethod.Put, new Uri(client.BaseAddress, endpoint));
+            if (body != null)
+            {
+                rq.Content = new FormUrlEncodedContent(body);
+            }
+            var rs = this.client.SendAsync(rq, token).GetAwaiter().GetResult();
+            response.Parse(rs).GetAwaiter().GetResult();
+            return Task.FromResult(response);
+        }
+        public Task<TResponse> Delete<TResponse>(string endpoint, CancellationToken token = default) where TResponse : TradierResponse, new()
+        {
+            TResponse response = new();
+            var rq = new HttpRequestMessage(HttpMethod.Delete, new Uri(client.BaseAddress, endpoint));            
             var rs = this.client.SendAsync(rq, token).GetAwaiter().GetResult();
             response.Parse(rs).GetAwaiter().GetResult();
             return Task.FromResult(response);

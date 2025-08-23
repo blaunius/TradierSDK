@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Tradier.Services;
 using Tradier.Tests;
 #nullable disable
-namespace Tradier.Services.Tests
+namespace Tradier.Tests.Services
 {
     [TestClass()]
     public class AccountServiceTests : ServiceTestBase
     {
-        public virtual AccountService service { get; set; }
+        public AccountService service { get; set; }
 
         [TestInitialize()]
         public override void SetService()
