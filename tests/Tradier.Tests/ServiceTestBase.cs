@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tradier.Services;
+using Tradier.Response;
 
 namespace Tradier.Tests
 {
@@ -33,12 +34,11 @@ namespace Tradier.Tests
         {
         }
 
-        public void AssertResponse(Response.TradierResponse rs)
+        public void AssertResponse(ITradierResponse rs)
         {
             Assert.IsNotNull(rs);
-            Assert.IsTrue(rs.IsSuccessful, $"Response was not successful for {rs.GetType().Name}");
-            Assert.IsNotNull(rs.RawResponse, $"Raw response was null for {rs.GetType().Name}");
-            Assert.IsFalse(string.IsNullOrWhiteSpace(rs.RawResponse), $"Raw response was empty for {rs.GetType().Name}");
+            Assert.IsTrue(rs.IsSuccessful, $"Response was not successful for {rs.GetType().Name}: {rs.ErrorMessage}");
+            Assert.IsTrue(rs.StatusCode == System.Net.HttpStatusCode.OK, $"Response status was not OK for {rs.GetType().Name}: {rs.StatusCode}");
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Tradier.Tests.Services
         {
             //this endpoint does not work through the api
             var allWatchlists = this.service.GetWatchlists().Result;
-            var id = allWatchlists.Data.Watchlist.LastOrDefault()?.Id;
+            var id = allWatchlists.Data?.Watchlists?.WatchlistsList.LastOrDefault()?.Id;
             var rs = this.service.UpdateWatchlist(id, "TestWL", [ "GOOGL" ]).Result;
             this.AssertResponse(rs);
         }
@@ -55,7 +55,7 @@ namespace Tradier.Tests.Services
         public void DeleteWatchlistTest()
         {
             var allWatchlists = this.service.GetWatchlists().Result;
-            var id = allWatchlists.Data.Watchlist.LastOrDefault()?.Id;
+            var id = allWatchlists.Data?.Watchlists?.WatchlistsList.LastOrDefault()?.Id;
             var rs = this.service.DeleteWatchlist(id).Result;
             this.AssertResponse(rs);
         }
@@ -64,7 +64,7 @@ namespace Tradier.Tests.Services
         public void AddSymbolsTest()
         {
             var allWatchlists = this.service.GetWatchlists().Result;
-            var id = allWatchlists.Data.Watchlist.LastOrDefault()?.Id;
+            var id = allWatchlists.Data?.Watchlists?.WatchlistsList.LastOrDefault()?.Id;
             var rs = this.service.AddSymbols(id, [ "GNL" ]).Result;
             this.AssertResponse(rs);
         }
@@ -73,10 +73,10 @@ namespace Tradier.Tests.Services
         public void RemoveSymbolTest()
         {
             var allWatchlists = this.service.GetWatchlists().Result;
-            var wl = allWatchlists.Data.Watchlist.LastOrDefault();
-            var id = wl.Id;
+            var wl = allWatchlists.Data?.Watchlists?.WatchlistsList.LastOrDefault();
+            var id = wl?.Id;
             var wlq = this.service.GetWatchlist(id).Result;
-            var symbol = wlq.Data.Watchlist.Items.Item.LastOrDefault()?.Symbol; 
+            var symbol = wlq.Data?.Watchlist?.Items?.Item.LastOrDefault()?.Symbol; 
             var rs = this.service.RemoveSymbol(id, symbol).Result;
             this.AssertResponse(rs);
         }
