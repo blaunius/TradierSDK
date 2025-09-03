@@ -1,6 +1,6 @@
 ﻿namespace Tradier.Request
 {
-    public class PaginationRequest
+    public class PaginationRequest : TradierRequestBase
     {
         /// <summary>
         /// Used for paginated results. Page to start results.
@@ -19,20 +19,17 @@
         /// End date
         /// </summary>
         public DateTime? End { get; set; }
-        public virtual string ParseQueryString()
+
+        protected override void BuildParameters()
         {
-            var query = new List<string>();
-            if (!string.IsNullOrWhiteSpace(Page))
-                query.Add($"page={Page}");
-            if (!string.IsNullOrWhiteSpace(Limit))
-                query.Add($"limit={Limit}");
-            if (Start.HasValue)
-                query.Add($"start={Start.Value:yyyy-MM-dd}");
-            if (End.HasValue)
-                query.Add($"end={End.Value:yyyy-MM-dd}");
-            if (!string.IsNullOrWhiteSpace(Type))
-                query.Add($"type={Type}");
-            return string.Join("&", query);
+            AddParameter("page", Page);
+            AddParameter("limit", Limit);
+            AddParameter("start", Start);
+            AddParameter("end", End);
+            AddParameter("type", Type);
         }
+
+        [Obsolete("Use ToQueryString() instead")]
+        public virtual string ParseQueryString() => ToQueryString();
     }
 }

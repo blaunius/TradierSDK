@@ -1,6 +1,6 @@
 ﻿namespace Tradier.Request
 {
-    public class MarketHistoricalQuotesRequest
+    public class MarketHistoricalQuotesRequest : TradierRequestBase
     {
         public Enumerations.IntervalType Interval { get; set; }
         public DateTime? Start { get; set; }
@@ -9,18 +9,16 @@
         /// Specify to retrieve aggregate data for all hours of the day (All) or only regular trading sessions (Open)
         /// </summary>
         public Enumerations.SessionFilter SessionFilter { get; set; }
-        internal string ParseQuery()
+
+        protected override void BuildParameters()
         {
-            string rtn = $"interval={Interval.ToString().ToLower()}&session_filter={SessionFilter.ToString().ToLower()}";
-            if (Start != null)
-            {
-                rtn += $"&start={Start.Value:yyyy-MM-dd}";
-            }
-            if (End != null)
-            {
-                rtn += $"&end={End.Value:yyyy-MM-dd}";
-            }
-            return rtn;
+            AddParameter("interval", (Enumerations.IntervalType?)Interval);
+            AddParameter("session_filter", (Enumerations.SessionFilter?)SessionFilter);
+            AddParameter("start", Start);
+            AddParameter("end", End);
         }
+
+        [Obsolete("Use ToQueryString() instead")]
+        internal string ParseQuery() => ToQueryString();
     }
 }

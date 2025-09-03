@@ -57,7 +57,7 @@ namespace Tradier.Services
             if (this.client is TradierSandboxClient)
                 throw new NotSupportedException("Historical activity can't be used in the paper trading/sandbox client.");
             request ??= new AccountHistoryRequest();
-            return client.Get<AccountHistoryResponse>($"accounts/{accountId}/history?{request.ParseQueryString()}", token);
+            return client.Get<AccountHistoryResponse>($"accounts/{accountId}/history?{request.ToQueryString()}", token);
         }
         /// <summary>
         /// Get cost basis information for a specific user account. This includes information for all closed positions. Cost basis information is updated through a nightly batch reconciliation process with our clearing firm.
@@ -65,7 +65,7 @@ namespace Tradier.Services
         public Task<AccountGainLossResponse> GetGainLoss(string accountId, GainLossOptions? query = null, CancellationToken token = default)
         {
             query ??= new GainLossOptions();
-            return client.Get<AccountGainLossResponse>($"accounts/{accountId}/gainloss?{query.ParseQueryString()}", token);
+            return client.Get<AccountGainLossResponse>($"accounts/{accountId}/gainloss?{query.ToQueryString()}", token);
         }
         /// <summary>
         /// Retrieve orders placed within an account. This API will return orders placed for the market session of the present calendar day.

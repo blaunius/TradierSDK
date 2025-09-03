@@ -39,7 +39,7 @@ namespace Tradier.Services
         public Task<MarketOptionExpirationResponse> GetOptionExpirations(string symbol, MarketOptionExpirationRequest? options = null, CancellationToken token = default)
         {
             options ??= new();
-            return client.Get<MarketOptionExpirationResponse>($"markets/options/expirations?symbol={symbol}&includeAllRoots={options.includeAllRoots}&contractSize={options.showContractSize}&expirationType={options.showExpirationType}&strikes={options.showStrikes}", token);
+            return client.Get<MarketOptionExpirationResponse>($"markets/options/expirations?symbol={symbol}&{options.ToQueryString()}", token);
         }
         /// <summary>
         /// Get all options symbols for the given underlying. 
@@ -60,7 +60,7 @@ namespace Tradier.Services
         public Task<MarketHistoricalQuotesResponse> GetHistoricalQuotes(string symbol, MarketHistoricalQuotesRequest? options = null, CancellationToken token = default)
         {
             options ??= new();
-            return client.Get<MarketHistoricalQuotesResponse>($"markets/history?symbol={symbol}&{options.ParseQuery()}", token);
+            return client.Get<MarketHistoricalQuotesResponse>($"markets/history?symbol={symbol}&{options.ToQueryString()}", token);
         }
         /// <summary>
         /// Time and Sales (timesales) is typically used for charting purposes.
@@ -73,7 +73,7 @@ namespace Tradier.Services
         public Task<MarketTimeAndSalesResponse> GetTimeAndSales(string symbol, MarketTimeAndSalesRequest? options = null, CancellationToken token = default)
         {
             options ??= new();
-            return client.Get<MarketTimeAndSalesResponse>($"markets/timesales?symbol={symbol}&{options.ParseQuery()}", token);
+            return client.Get<MarketTimeAndSalesResponse>($"markets/timesales?symbol={symbol}&{options.ToQueryString()}", token);
         }
         /// <summary>
         /// The ETB list contains securities that are able to be sold short with a Tradier Brokerage account.

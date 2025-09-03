@@ -1,6 +1,6 @@
 ﻿namespace Tradier.Request
 {
-    public class  AccountHistoryRequest : PaginationRequest
+    public class AccountHistoryRequest : PaginationRequest
     {
         /// <summary>
         /// Activity type
@@ -16,20 +16,15 @@
         /// </summary>
         public bool ExactMatch { get; set; }
 
-        public override string ParseQueryString()
+        protected override void BuildParameters()
         {
-            string rtn = base.ParseQueryString();
-            if (!string.IsNullOrWhiteSpace(Symbol))
-            {
-                rtn += string.IsNullOrWhiteSpace(rtn) ? "" : "&";
-                rtn += $"symbol={Symbol}";
-            }
+            base.BuildParameters();
+            AddParameter("symbol", Symbol);
             if (ExactMatch)
-            {
-                rtn += string.IsNullOrWhiteSpace(rtn) ? "" : "&";
-                rtn += "exact=true";
-            }
-            return rtn;
+                AddParameter("exact", ExactMatch);
         }
+
+        [Obsolete("Use ToQueryString() instead")]
+        public override string ParseQueryString() => ToQueryString();
     }
 }

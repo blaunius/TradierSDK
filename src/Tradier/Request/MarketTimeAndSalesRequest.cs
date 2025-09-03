@@ -2,37 +2,33 @@
 
 namespace Tradier.Request
 {
-    public class MarketTimeAndSalesRequest
+    public class MarketTimeAndSalesRequest : TradierRequestBase
     {
         public IntervalScope Interval { get; set; }
-        private string interval
-        {
-            get
-            {
-                if (Interval == IntervalScope.OneMinute)
-                    return "1min";
-                if (Interval == IntervalScope.FiveMinutes)
-                    return "5min";
-                if (Interval == IntervalScope.FifteenMinutes)
-                    return "15min";
-                return Interval.ToString().ToLower();
-            }
-        }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public SessionFilter Session { get; set; }
-        public string ParseQuery()
+
+        private string FormatInterval()
         {
-            string rtn = $"interval={interval}&session_filter={Session.ToString().ToLower()}";
-            if (Start != null)
+            return Interval switch
             {
-                rtn += $"&start={Start.Value:yyyy-MM-dd}";
-            }
-            if (End != null)
-            {
-                rtn += $"&end={End.Value:yyyy-MM-dd}";
-            }
-            return rtn;
+                IntervalScope.OneMinute => "1min",
+                IntervalScope.FiveMinutes => "5min",
+                IntervalScope.FifteenMinutes => "15min",
+                _ => Interval.ToString().ToLowerInvariant()
+            };
         }
+
+        protected override void BuildParameters()
+        {
+            AddParameter("interval", FormatInterval());
+            AddParameter("session_filter", (IntervalScope?)Session);
+            AddParameter("start", Start);
+            AddParameter("end", End);
+        }
+
+        [Obsolete("Use ToQueryString() instead")]
+        public string ParseQuery() => ToQueryString();
     }
 }
