@@ -1,17 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tradier.Response.DataContracts;
+using Tradier.Model;
 
 namespace Tradier.Response
 {
-    public class AccountBalancesResponse : TradierResponse
+    /// <summary>
+    /// Response for account balances API calls.
+    /// </summary>
+    public class AccountBalancesResponse : TradierResponseBase<BalanceDataContract>
     {
-        public Model.Balance? Balance { get; set; }
-        internal override void Deserialize()
+        /// <summary>
+        /// Gets the balance information from the response.
+        /// </summary>
+        public Balance? Balance => Data?.Balances;
+
+        /// <summary>
+        /// Gets a value indicating whether balance data is available.
+        /// </summary>
+        public bool HasBalance => Balance != null;
+
+        protected override bool HandleNullResponse()
         {
-            this.Balance = System.Text.Json.JsonSerializer.Deserialize<AccountBalancesResponse>(this.RawResponse)?.Balance ?? new();
+            // Create empty balance data for null responses
+            Data = new BalanceDataContract { Balances = new Balance() };
+            return true;
         }
     }
 }

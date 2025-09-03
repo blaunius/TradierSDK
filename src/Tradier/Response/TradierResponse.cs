@@ -1,29 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
+using System.Text.Json;
 
 namespace Tradier.Response
 {
-    public abstract class TradierResponse
+    /// <summary>
+    /// Legacy base class for backward compatibility.
+    /// New response classes should inherit from TradierResponseBase&lt;T&gt; instead.
+    /// </summary>
+    [Obsolete("Use TradierResponseBase<T> instead for better type safety and async support.")]
+    public abstract class TradierResponse : ITradierResponse
     {
-        public string RawResponse { get; internal set; } = null!;
+        private readonly Dictionary<string, string> _headers = new();
+        
+        public string RawResponse { get; internal set; } = string.Empty;
         public bool IsSuccessful { get; internal set; }
-        internal Task Parse(HttpResponseMessage rs)
+        public HttpStatusCode StatusCode { get; internal set; }
+        public string? ErrorMessage { get; internal set; }
+        public IReadOnlyDictionary<string, string> Headers => _headers.AsReadOnly();
+
+        internal async Task Parse(HttpResponseMessage rs)
         {
-            RawResponse = rs.Content.ReadAsStringAsync().Result;
-            IsSuccessful = rs.IsSuccessStatusCode;
-            if (IsSuccessful)
-            {
-                Deserialize();
-            }
-            return Task.CompletedTask;
+            await ParseAsync(rs);
         }
+
+        public async Task<bool> ParseAsync(HttpResponseMessage response, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                StatusCode = response.StatusCode;
+                IsSuccessful = response.IsSuccessStatusCode;
+                
+                // Extract headers
+                foreach (var header in response.Headers)
+                {
+                    _headers[header.Key] = string.Join(", ", header.Value);
+                }
+
+                RawResponse = await response.Content.ReadAsStringAsync(cancellationToken);
+                
+                if (IsSuccessful)
+                {
+                    Deserialize();
+                }
+                else
+                {
+                    ErrorMessage = $"API Error ({StatusCode}): {RawResponse}";
+                }
+                
+                return IsSuccessful;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Response parsing failed: {ex.Message}";
+                return false;
+            }
+        }
+
         internal virtual void Deserialize()
         {
-            //this method should always be overriden
-            throw new NotImplementedException(this.GetType() + " is not yet implemented for serialization");
+            // Default implementation for backward compatibility
+            // Subclasses should override this method
         }
     }
 }

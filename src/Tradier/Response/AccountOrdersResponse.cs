@@ -1,24 +1,41 @@
-﻿using System.Text.Json.Serialization;
+﻿using Tradier.Response.DataContracts;
 using Tradier.Model;
 
 namespace Tradier.Response
 {
-    public class AccountOrdersResponse : TradierResponse
+    /// <summary>
+    /// Response for account orders API calls.
+    /// </summary>
+    public class AccountOrdersResponse : TradierResponseBase<OrdersDataContract>
     {
-        [JsonPropertyName("orders")]
-        public AccountOrdersContainer? Data { get; set; }
-        public class AccountOrdersContainer
-        {
-            [JsonPropertyName("order")]
-            public List<Order> Orders { get; set; } = new();
+        /// <summary>
+        /// Gets the list of orders from the response.
+        /// </summary>
+        public List<Order> Orders => Data?.Orders?.OrdersList ?? new List<Order>();
 
-        }
-        internal override void Deserialize()
+        /// <summary>
+        /// Gets a value indicating whether any orders are present in the response.
+        /// </summary>
+        public bool HasOrders => Orders.Any();
+
+        /// <summary>
+        /// Gets the count of orders in the response.
+        /// </summary>
+        public int OrderCount => Orders.Count;
+
+        protected override bool IsNullResponse(string content)
         {
-            if (this.RawResponse == "{\"orders\":\"null\"}")
-                Data = new();
-            else
-                Data = System.Text.Json.JsonSerializer.Deserialize<AccountOrdersResponse>(this.RawResponse)?.Data ?? new();
+            return base.IsNullResponse(content) || content.Trim() == "{\"orders\":\"null\"}";
+        }
+
+        protected override bool HandleNullResponse()
+        {
+            // Create empty orders data for null responses
+            Data = new OrdersDataContract 
+            { 
+                Orders = new OrdersDataContract.OrdersContainer() 
+            };
+            return true;
         }
     }
 }

@@ -1,23 +1,41 @@
-﻿using System.Text.Json.Serialization;
+﻿using Tradier.Response.DataContracts;
 using Tradier.Model;
 
 namespace Tradier.Response
 {
-    public class AccountHistoryResponse : TradierResponse
+    /// <summary>
+    /// Response for account history API calls.
+    /// </summary>
+    public class AccountHistoryResponse : TradierResponseBase<HistoryDataContract>
     {
-        [JsonPropertyName("history")]
-        public AccountHistoryResponseContainer? Data { get; set; }
-        public class AccountHistoryResponseContainer
+        /// <summary>
+        /// Gets the list of historical events from the response.
+        /// </summary>
+        public List<Event> Events => Data?.History?.Events ?? new List<Event>();
+
+        /// <summary>
+        /// Gets a value indicating whether any events are present in the response.
+        /// </summary>
+        public bool HasEvents => Events.Any();
+
+        /// <summary>
+        /// Gets the count of events in the response.
+        /// </summary>
+        public int EventCount => Events.Count;
+
+        protected override bool IsNullResponse(string content)
         {
-            [JsonPropertyName("event")]
-            public List<Event> Events { get; set; } = new();
+            return base.IsNullResponse(content) || content.Trim() == "{\"history\":\"null\"}";
         }
-        internal override void Deserialize()
+
+        protected override bool HandleNullResponse()
         {
-            if (this.RawResponse == "{\"history\":\"null\"}")
-                this.Data = new();
-            else
-                this.Data = System.Text.Json.JsonSerializer.Deserialize<AccountHistoryResponse>(this.RawResponse)?.Data ?? new();
+            // Create empty history data for null responses
+            Data = new HistoryDataContract 
+            { 
+                History = new HistoryDataContract.HistoryContainer() 
+            };
+            return true;
         }
     }
 }
