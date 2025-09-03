@@ -34,7 +34,7 @@ namespace Tradier.Tests.Services
             AssertResponse(myPositions);
 
             var history = await service.GetHistory(id);
-            var historyWithQuery = await service.GetHistory(id, new Request.AccountHistoryRequest()
+            var historyWithQuery = await service.GetHistory(id, new Tradier.Request.AccountHistoryRequest()
             {
                 ActivityType = Enumerations.ActivityType.Trade,
                 End = DateTime.Now,
@@ -46,7 +46,7 @@ namespace Tradier.Tests.Services
             AssertResponse(historyWithQuery);
 
             var accountGainLoss = await service.GetGainLoss(id);
-            var accountGainLossWithQuery = await service.GetGainLoss(id, new Request.GainLossOptions()
+            var accountGainLossWithQuery = await service.GetGainLoss(id, new Tradier.Request.GainLossOptions()
             {
                 End = DateTime.Now,
                 Start = DateTime.Now.AddDays(-30),

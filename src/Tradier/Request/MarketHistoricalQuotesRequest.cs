@@ -19,6 +19,6 @@
         }
 
         [Obsolete("Use ToQueryString() instead")]
-        internal string ParseQuery() => ToQueryString();
+        public string ParseQuery() => ToQueryString();
     }
 }

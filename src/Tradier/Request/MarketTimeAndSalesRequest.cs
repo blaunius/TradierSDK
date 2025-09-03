@@ -23,7 +23,7 @@ namespace Tradier.Request
         protected override void BuildParameters()
         {
             AddParameter("interval", FormatInterval());
-            AddParameter("session_filter", (IntervalScope?)Session);
+            AddParameter("session_filter", (SessionFilter?)Session);
             AddParameter("start", Start);
             AddParameter("end", End);
         }

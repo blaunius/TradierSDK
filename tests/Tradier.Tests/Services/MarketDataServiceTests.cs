@@ -57,7 +57,7 @@ namespace Tradier.Tests.Services
         [TestMethod()]
         public void GetHistoricalQuotesTest()
         {
-            var rs = this.service.GetHistoricalQuotes("AAPL", new Request.MarketHistoricalQuotesRequest()
+            var rs = this.service.GetHistoricalQuotes("AAPL", new Tradier.Request.MarketHistoricalQuotesRequest()
             {
                 Start = DateTime.Now.AddDays(-60),
                 End = DateTime.Now.AddDays(60),
@@ -70,7 +70,7 @@ namespace Tradier.Tests.Services
         [TestMethod()]
         public void GetTimeAndSalesTest()
         {
-            var rs = this.service.GetTimeAndSales("AAPL", new Request.MarketTimeAndSalesRequest()
+            var rs = this.service.GetTimeAndSales("AAPL", new Tradier.Request.MarketTimeAndSalesRequest()
             {
                 Start = DateTime.Now,
                 End = DateTime.Now.AddDays(60),
